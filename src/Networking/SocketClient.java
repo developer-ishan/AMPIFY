@@ -5,11 +5,10 @@ import ampifyServer.requests.SendSongObjToseverRequest;
 import ampifyServer.responses.Response;
 import ampifyServer.responses.ResponseCode;
 import ampifyServer.responses.SendSongObjToserverResponse;
+import runnable.client.HandleSong;
 
-import javax.sound.sampled.*;
 import java.io.*;
 import java.net.*;
-import java.nio.file.Path;
 
 public class SocketClient {
     public  static Response sendSongObject(SendSongObjToseverRequest request)
@@ -24,6 +23,7 @@ public class SocketClient {
         objectOutputStream.flush();
         Response response=new SendSongObjToserverResponse(ResponseCode.SUCCESS,"SONG REQUEST SEND");
 
+        //controll this thread to pause and suspend the music
         Thread playThread=new Thread(new HandleSong());
         playThread.start();
             return null;

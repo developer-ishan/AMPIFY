@@ -4,9 +4,8 @@ import ampifyServer.Song;
 import ampifyServer.requests.Request;
 import ampifyServer.responses.Response;
 import ampifyServer.responses.ResponseCode;
-import com.sun.net.httpserver.Authenticator;
+import runnable.server.HandleClient;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
