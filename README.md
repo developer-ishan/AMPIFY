@@ -1,7 +1,7 @@
 # AMPIFY
 Project for Softablitz
 
-##Currently 3 branches are active
+## Currently 3 branches are active
 <ul>
   <li>1. test:- containes our GUI</li>
   <li>2. networking:- containes the server socket module</li>
