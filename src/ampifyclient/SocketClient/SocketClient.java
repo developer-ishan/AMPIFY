@@ -1,7 +1,7 @@
 package ampifyclient.SocketClient;
 
-import ampifyclient.requests.Request;
-import ampifyclient.responses.Response;
+import commonPackages.requests.Request;
+import commonPackages.responses.Response;
 import ampifyclient.runnable.HandleRequest;
 import ampifyclient.runnable.HandleResponse;
 
@@ -17,7 +17,6 @@ public class SocketClient {
             socket = new Socket("localhost", 5555);
             Thread thread = new Thread(new HandleRequest(socket, request));
             thread.start();
-            System.out.println("Request Send Successfully :::: " + request);
         } catch (IOException e) {
             System.out.print("Request Send Unsuccessfully :::: " + request +
                     "\nError has Occured :::: " + e);
@@ -32,7 +31,6 @@ public class SocketClient {
             Thread thread=new Thread(handleResponse);
             thread.start();
             response=handleResponse.getResponse();
-            System.out.println("Response Recieved Succesfully ::::::  "+response);
         } catch (IOException e) {
             response=null;
             System.out.println("No Response Is Recieved \nError Has Occured :::  "+e);

@@ -1,11 +1,11 @@
 package ampifyServer.requestHandler;
 
-import ampifyServer.requests.group.CreateGroup;
-import ampifyServer.requests.group.InviteUser;
+import commonPackages.requests.group.CreateGroup;
+import commonPackages.requests.group.InviteUser;
 
-import ampifyServer.responses.Response;
-import ampifyServer.responses.ResponseCode;
-import ampifyServer.responses.group.createResponse;
+import commonPackages.responses.Response;
+import commonPackages.responses.ResponseCode;
+import commonPackages.responses.group.createResponse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

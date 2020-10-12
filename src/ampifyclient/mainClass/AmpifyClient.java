@@ -1,10 +1,9 @@
 package ampifyclient.mainClass;
 
 import ampifyclient.SocketClient.SocketClient;
-import ampifyclient.requests.Request;
-import ampifyclient.requests.auth.LoginRequest;
-import ampifyclient.requests.auth.SignupRequest;
-import ampifyclient.responses.Response;
+import commonPackages.requests.Request;
+import commonPackages.requests.auth.LoginRequest;
+import commonPackages.responses.Response;
 
 
 public class AmpifyClient implements Runnable{
@@ -19,7 +18,7 @@ public class AmpifyClient implements Runnable{
         //Request request=new SignupRequest("pirate","pirate@mnnit.ac.in","pirate");
         SocketClient.sendRequestObject(request);
         try {
-            Thread.sleep(100);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

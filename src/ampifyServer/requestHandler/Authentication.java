@@ -1,14 +1,14 @@
 package ampifyServer.requestHandler;
 
-import ampifyServer.models.User;
-import ampifyServer.requests.auth.LoginRequest;
+import commonPackages.models.User;
+import commonPackages.requests.auth.LoginRequest;
 
-import static ampifyServer.responses.ResponseCode.*;
+import static commonPackages.responses.ResponseCode.*;
 
-import ampifyServer.requests.auth.SignupRequest;
-import ampifyServer.responses.auth.LoginResponse;
-import ampifyServer.responses.Response;
-import ampifyServer.responses.auth.SignupResponse;
+import commonPackages.requests.auth.SignupRequest;
+import commonPackages.responses.auth.LoginResponse;
+import commonPackages.responses.Response;
+import commonPackages.responses.auth.SignupResponse;
 
 
 import java.sql.Connection;

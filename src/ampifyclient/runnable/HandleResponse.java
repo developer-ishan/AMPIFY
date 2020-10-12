@@ -1,6 +1,6 @@
 package ampifyclient.runnable;
 
-import ampifyclient.responses.Response;
+import commonPackages.responses.Response;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
