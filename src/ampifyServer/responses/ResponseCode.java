@@ -4,6 +4,5 @@ public enum ResponseCode {
     SUCCESS,
     SERVERDOWN,
     DENIED,
-    FAILURE,
-    SENDSONG
+    FAILURE
 }
