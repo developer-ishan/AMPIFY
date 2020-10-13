@@ -17,9 +17,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class Authentication {
-    public static Response signup(SignupRequest req, Connection con) throws SQLException{
-        String userId = UUID.randomUUID().toString();
+public class UserRequestsHandler extends User{
+
+    public UserRequestsHandler(String id){
+        super(id);
+    }
+    public static SignupResponse signup(SignupRequest req, Connection con) throws SQLException{
+        String id = UUID.randomUUID().toString();
         String name = req.getName();
         String passwd = req.getPasswd();
         String email = req.getEmail();
@@ -31,7 +35,7 @@ public class Authentication {
         PreparedStatement preStat;
 
         preStat = con.prepareStatement(query);
-        preStat.setString(1,userId);
+        preStat.setString(1,id);
         preStat.setString(2, name);
         preStat.setString(3, email);
         preStat.setString(4, passwd);
@@ -39,12 +43,12 @@ public class Authentication {
 
         try {
             preStat.executeUpdate();
-            return new SignupResponse(SUCCESS,"Welcome to ampify",new User(name,userId,email));
+            return new SignupResponse(SUCCESS,"Welcome to ampify",new User(name,id,email));
         } catch (SQLException throwables) {
             return new SignupResponse(FAILURE,"User already exists");
         }
     }
-    public static Response login (LoginRequest req, Connection con) throws SQLException {
+    public static LoginResponse login (LoginRequest req, Connection con) throws SQLException {
         String email = req.getEmail();
         String passwd = req.getPasswd();
 

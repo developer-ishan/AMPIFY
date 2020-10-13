@@ -1,24 +1,25 @@
 package commonPackages.models;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class User {
-    private String name;
-    private String id;
-    private String email;
-    private String password;
-    private String doj;
+public class User implements Serializable {
+    protected String name;
+    protected String id;
+    protected String email;
+    protected String doj;
     //group info
-    private ArrayList<Song> likes;
-    private ArrayList<Group> groups;
-    private ArrayList<Group> invites;
+    protected ArrayList<Song> likes;
+    protected ArrayList<Group> groups;
+    protected ArrayList<Group> invites;
     //playlists
-    private ArrayList<Playlist> playlists;
-    private ArrayList<History> history;
+    protected ArrayList<Playlist> playlists;
+    protected ArrayList<History> history;
 
     public User(String name, String id, String email){
         this.name = name;
@@ -101,6 +102,36 @@ public class User {
         }
     }
 
+    public static boolean isAval(Connection con, String u_id) throws SQLException{
+        String query = "SELECT isAval from user where u_id=?";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setString(1,u_id);
+        ResultSet rs = ps.executeQuery();
+
+        return rs.getBoolean(1);
+    }
+    public static HashMap<String ,Boolean> getAvalUsers(Connection con) throws SQLException{
+        String query = "SELECT u_id, isAval from user";
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        HashMap<String ,Boolean> avalUsers = new HashMap<>();
+
+        while (rs.next()){
+            if(!rs.getBoolean(2))
+                continue;
+            avalUsers.put(rs.getString(1),rs.getBoolean(2));
+        }
+        return avalUsers;
+    }
+    public static void setAval(Connection con, String u_id, Boolean status) throws SQLException{
+        String query = "UPDATE user SET isAval=? WHERE u_id=?";
+        PreparedStatement ps = con.prepareStatement(query);
+
+        ps.setBoolean(1,status);
+        ps.setString(2,u_id);
+        ps.executeUpdate();
+    }
     @Override
     public String toString() {
         return "User{" +

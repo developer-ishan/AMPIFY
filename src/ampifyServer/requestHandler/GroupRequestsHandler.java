@@ -13,9 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class GroupHandler{
+public class GroupRequestsHandler {
     public static Response create(CreateGroup req, Connection con) throws SQLException{
-        String groupId = UUID.randomUUID().toString();;
+        String groupId = UUID.randomUUID().toString();
         String name = req.getName();
         String userId = req.getUserId();
 

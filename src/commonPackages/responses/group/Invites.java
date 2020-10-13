@@ -1,13 +1,13 @@
 package commonPackages.responses.group;
 
-import ampifyServer.requestHandler.GroupHandler;
+import ampifyServer.requestHandler.GroupRequestsHandler;
 import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
 
 public class Invites extends Response {
-    GroupHandler groupHandlers[];
-    public Invites(ResponseCode code, String message, GroupHandler[] groupHandlers){
+    GroupRequestsHandler groupRequestsHandlers[];
+    public Invites(ResponseCode code, String message, GroupRequestsHandler[] groupRequestsHandlers){
         super(code,message);
-        this.groupHandlers = groupHandlers;
+        this.groupRequestsHandlers = groupRequestsHandlers;
     }
 }
