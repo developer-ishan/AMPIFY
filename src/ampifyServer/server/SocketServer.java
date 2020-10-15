@@ -1,5 +1,6 @@
 package ampifyServer.server;
 
+import ampifyServer.requestHandler.UserRequestsHandler;
 import commonPackages.models.User;
 
 import java.io.IOException;
@@ -18,18 +19,19 @@ public class SocketServer {
         ServerSocket serverSocket = new ServerSocket(5000);
         Connection con = dbConnection.connect();
         System.out.println("Server Started at port 5000");
-        
-        HashMap<String ,Boolean> avalUsers = User.getAvalUsers(con);
+        HashMap<String ,Boolean> avalUsers;
 
-        avalUsers.forEach((k,v) -> {
-            System.out.println(k+" : "+v);
-        });
         //Running infinite loop to listen to new client connections
         while (true)
         {
             Socket socket = null;
-
             try{
+                avalUsers = UserRequestsHandler.getAvalUsers(con);
+                System.out.println("Available users are:- ");
+                avalUsers.forEach((k,v) -> {
+                    System.out.println(k+" : "+v);
+                });
+
                 socket = serverSocket.accept();
                 System.out.println(socket.toString()+" is trying to login.");
 

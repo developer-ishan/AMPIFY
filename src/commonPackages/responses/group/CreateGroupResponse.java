@@ -3,12 +3,12 @@ package commonPackages.responses.group;
 import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
 
-public class createResponse extends Response {
+public class CreateGroupResponse extends Response {
     public String groupId;
-    public createResponse(ResponseCode code, String message){
+    public CreateGroupResponse(ResponseCode code, String message){
         super(code,message);
     }
-    public createResponse(ResponseCode code, String message,String groupId){
+    public CreateGroupResponse(ResponseCode code, String message, String groupId){
         super(code,message);
         this.groupId = groupId;
     }

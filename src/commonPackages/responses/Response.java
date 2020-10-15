@@ -2,7 +2,7 @@ package commonPackages.responses;
 
 import java.io.Serializable;
 
-public class Response implements Serializable {
+public abstract class Response implements Serializable {
     protected ResponseCode code;
     protected String message;
 

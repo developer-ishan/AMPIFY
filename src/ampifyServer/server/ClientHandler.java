@@ -2,6 +2,7 @@ package ampifyServer.server;
 
 import ampifyServer.requestHandler.RequestHandler;
 import ampifyServer.requestHandler.UserRequestsHandler;
+import commonPackages.models.User;
 import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
@@ -9,7 +10,9 @@ import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
+import commonPackages.responses.user.ListInvitesResponse;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,6 +29,8 @@ public class ClientHandler implements Runnable{
     private final HashMap<String, Boolean> avalUsers;
     private final Connection con;
     private boolean isLoggedIn;
+
+    private String id;
     public ClientHandler(
             Socket socket,
             ObjectInputStream ois,
@@ -51,6 +56,9 @@ public class ClientHandler implements Runnable{
                     this.sendReponse(res);
                     if(res.getCode() == ResponseCode.SUCCESS){
                         isLoggedIn = true;
+                        this.id = res.getUserId();
+                        System.out.println(res+"Just logged in.");
+                        UserRequestsHandler.setAval(con,id,true);
                         break;
                     }
                 }
@@ -59,44 +67,43 @@ public class ClientHandler implements Runnable{
                     SignupResponse res = UserRequestsHandler.signup((SignupRequest) req,con);
                     this.sendReponse(res);
                     if(res.getCode() == ResponseCode.SUCCESS){
-                        break;
+                        System.out.println(res+"Just signed up.");
                     }
                 }
                 else
                 {
                     continue;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("User is closing application.");
+                try {
+                    this.ois.close();
+                    this.oos.close();
+                    return;
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         }
+
+
+
         while (true){
             try {
                 Request req = (Request) this.getRequest();
                 Response res = RequestHandler.getResponse(req,con);
                 this.sendReponse(res);
-                break;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                return;
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                System.out.println(res);
             }
-        }
-
-        try {
-            // closing resources
-            this.ois.close();
-            this.oos.close();
-        }catch(Exception e){
-            e.printStackTrace();
+            catch (Exception e){
+                System.out.println("User is signing off.");
+                try {
+                    UserRequestsHandler.setAval(con,id,false);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                return;
+            }
         }
     }
     public void sendReponse(Response res) throws IOException {

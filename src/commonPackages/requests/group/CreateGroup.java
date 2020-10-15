@@ -13,7 +13,6 @@ public class CreateGroup extends Request {
     public String getName() {
         return name;
     }
-
     public String getUserId() {
         return userId;
     }
