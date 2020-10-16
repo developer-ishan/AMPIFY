@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.controllers.auth.Signup">
+   <children>
+      <Button fx:id="signupBtn" layoutX="271.0" layoutY="273.0" mnemonicParsing="false" onAction="#signup" text="Signup" />
+      <PasswordField fx:id="password" layoutX="374.0" layoutY="200.0" />
+      <TextField fx:id="email" layoutX="374.0" layoutY="147.0" />
+      <TextField fx:id="name" layoutX="374.0" layoutY="89.0" />
+      <Label layoutX="127.0" layoutY="94.0" text="Name" />
+      <Label layoutX="127.0" layoutY="152.0" text="Email" />
+      <Label layoutX="127.0" layoutY="205.0" text="Password" />
+   </children>
+</AnchorPane>
