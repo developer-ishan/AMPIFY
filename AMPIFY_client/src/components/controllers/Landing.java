@@ -16,7 +16,15 @@ public class Landing {
     public Button loginBtn, signupBtn, offlineBtn;
 
     public void loginListener(ActionEvent actionEvent){
-        System.out.println("Login Clicked.");
+        Stage stage = (Stage) loginBtn.getScene().getWindow();
+        Parent root = null;
+
+        try {
+            root = FXMLLoader.load(getClass().getResource("/auth/login.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage.setScene(new Scene(root, 450, 350));
     }
 
     public void signupListener(ActionEvent actionEvent){
@@ -27,7 +35,7 @@ public class Landing {
         } catch (IOException e){
             e.printStackTrace();
         }
-        stage.setScene(new Scene(root,500,400));
+        stage.setScene(new Scene(root,450,350));
     }
 
     public void goOfflineListener(ActionEvent actionEvent){

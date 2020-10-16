@@ -15,7 +15,7 @@ public class Ampify extends Application {
         primaryStage.setTitle("Ampify");
 
         Parent landing  = FXMLLoader.load(getClass().getResource("landing.fxml"));
-        primaryStage.setScene(new Scene(landing,1000,900));
+        primaryStage.setScene(new Scene(landing,300,400));
 
         primaryStage.show();
     }
