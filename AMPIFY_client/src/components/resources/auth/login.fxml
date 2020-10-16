@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="components.controllers.auth.Login"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="290.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.controllers.auth.Login">
+   <children>
+      <PasswordField fx:id="passwd" layoutX="173.0" layoutY="169.0" prefHeight="26.0" prefWidth="252.0" />
+      <TextField fx:id="email" layoutX="172.0" layoutY="117.0" prefHeight="26.0" prefWidth="252.0" />
+      <Label layoutX="14.0" layoutY="122.0" text="Email :" />
+      <Label layoutX="14.0" layoutY="169.0" text="Password :" />
+      <Button fx:id="loginBtn" layoutX="110.0" layoutY="229.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="252.0" text="LOGIN" />
+      <Label layoutX="186.0" layoutY="46.0" text="USER LOGIN">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+   </children>
 </AnchorPane>
