@@ -22,6 +22,7 @@ public class Signup {
         String name = this.name.getText();
         String email = this.email.getText();
         String password = this.password.getText();
+
         Request req = new SignupRequest(name,email,password);
 
         System.out.println(String.format("%s\n%s\n%s\n",name,email,password));
@@ -34,7 +35,6 @@ public class Signup {
             Response res = (Response) client.getResponse();
             System.out.println(res);
             socket.close();
-
             //Get him to login page create a new client
             //Once logged in propagate this client object through out the application
         } catch (IOException | ClassNotFoundException e) {
