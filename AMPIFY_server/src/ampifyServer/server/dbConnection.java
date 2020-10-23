@@ -12,18 +12,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class dbConnection {
-    // JDBC driver name and database URL
+//    JDBC driver name and database URL
 //    private static final String jdbcDriver = "org.mariadb.jdbc.Driver";
 //    private static  final String dbURL = "jdbc:mariadb://localhost:3306/ampify";
-
-    // Database credentials
-    private static final String user   = "root";
-    private static final String pass  = "";
+//
+//    // Database credentials
+//    private static final String user   = "root";
+//    private static final String pass  = "root";
     private static final String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     private static  final String dbURL = "jdbc:mysql://localhost:3306/ampify";
 //    // Database credentials
-//    private static final String user   = "developer-arun";
-//    private static final String pass  = "developer-arun";
+    private static final String user   = "root";
+    private static final String pass  = "";
     public static Connection connect() throws SQLException{
         System.out.println("Connecting to DB....");
         // Register the jdbc driver

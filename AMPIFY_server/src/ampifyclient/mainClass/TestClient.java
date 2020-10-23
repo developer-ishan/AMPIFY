@@ -31,6 +31,7 @@ public class TestClient {
     }
     public static void main(String[] args) {
         String userId = null;
+        String token = null;
         boolean isLoggedin = false;
         try{
             Socket socket = new Socket("localhost",5000);
@@ -71,10 +72,10 @@ public class TestClient {
                         LoginResponse res = (LoginResponse) ampifyClient.getResponse(socket);
                         if(res.getCode() == ResponseCode.SUCCESS) {
                             isLoggedin = true;
-                            userId = res.getUserId();
+                            token = res.getToken();
                         }
                         System.out.println(res);
-                        userId = res.getUserId();
+                        token = res.getToken();
                         break;
                     }
                     default:

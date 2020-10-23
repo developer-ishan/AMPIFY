@@ -4,23 +4,28 @@ import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
 
 public class LoginResponse extends Response {
-    private String userId;
+    private String token;
     public LoginResponse(ResponseCode code, String message){
         super(code,message);
     }
-    public LoginResponse(ResponseCode code, String message, String userId) {
+    public LoginResponse(ResponseCode code, String message, String token) {
         super(code, message);
-        this.userId = userId;
+        this.token = token;
     }
 
-    public String getUserId() {
-        return userId;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
     public String toString() {
         return "LoginResponse{" +
-                "userId='" + userId + '\'' +
+                "token='" + token + '\'' +
                 ", code=" + code +
                 ", message='" + message + '\'' +
                 '}';
