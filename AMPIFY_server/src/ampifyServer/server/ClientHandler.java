@@ -1,5 +1,6 @@
 package ampifyServer.server;
 
+import ampifyServer.requestHandler.JWebToken;
 import ampifyServer.requestHandler.RequestHandler;
 import ampifyServer.requestHandler.UserRequestsHandler;
 import commonPackages.models.User;
@@ -8,6 +9,7 @@ import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
+import commonPackages.responses.auth.InvalidToken;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
 import commonPackages.responses.user.ListInvitesResponse;
@@ -19,6 +21,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ClientHandler implements Runnable{
@@ -26,83 +29,59 @@ public class ClientHandler implements Runnable{
     private final Socket socket;
     private final ObjectInputStream ois;
     private final ObjectOutputStream oos;
-    private final HashMap<String, Boolean> avalUsers;
     private final Connection con;
-    private boolean isLoggedIn;
+    private String userId;
 
-    private String id;
     public ClientHandler(
             Socket socket,
             ObjectInputStream ois,
             ObjectOutputStream oos,
-            HashMap<String, Boolean> avalUsers,
             Connection con
     ){
         this.socket = socket;
         this.ois = ois;
         this.oos = oos;
-        this.avalUsers = avalUsers;
         this.con = con;
-        this.isLoggedIn = false;
+        userId = null;
     }
     @Override
     public void run() {
-        while (!isLoggedIn){
-            try {
-                Request req = (Request) this.getRequest();
-                if(req instanceof LoginRequest)
-                {
-                    LoginResponse res = UserRequestsHandler.login((LoginRequest) req, con);
-                    this.sendReponse(res);
-                    if(res.getCode() == ResponseCode.SUCCESS){
-                        isLoggedIn = true;
-                        this.id = res.getUserId();
-                        System.out.println(res+"Just logged in.");
-                        UserRequestsHandler.setAval(con,id,true);
-                        break;
-                    }
-                }
-                else if (req instanceof SignupRequest)
-                {
-                    SignupResponse res = UserRequestsHandler.signup((SignupRequest) req,con);
-                    this.sendReponse(res);
-                    if(res.getCode() == ResponseCode.SUCCESS){
-                        System.out.println(res+"Just signed up.");
-                    }
-                }
-                else
-                {
-                    continue;
-                }
-            } catch (Exception e) {
-                System.out.println("User is closing application.");
-                try {
-                    this.ois.close();
-                    this.oos.close();
-                    return;
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-        }
-
-
-
+        long b1=-1,b2=-1;
         while (true){
             try {
                 Request req = (Request) this.getRequest();
+                if(!(req instanceof LoginRequest || req instanceof SignupRequest) && userId == null){
+                    JWebToken token = new JWebToken(
+                            req.getToken()
+                    );
+                    if(token.isValid()){
+                        userId = token.getSubject();
+                        SocketServer.avalUsers.add(userId);
+                    } else {
+                        this.sendReponse(new InvalidToken());
+                        continue;
+                    }
+                }
+
                 Response res = RequestHandler.getResponse(req,con);
                 this.sendReponse(res);
                 System.out.println(res);
             }
             catch (Exception e){
-                System.out.println("User is signing off.");
-                try {
-                    UserRequestsHandler.setAval(con,id,false);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                if(b1==-1)
+                    b1 = new Date().getTime();
+                else {
+                    long index = SocketServer.avalUsers.indexOf(userId);
+                    if(index!=-1)
+                        SocketServer.avalUsers.remove(index);
+                    // user will be given 10 sec timeout if connection is broken after
+                    // which he will be declared inactive
+                    if(new Date().getTime() - b1 >= 10000) {
+                        System.out.println("User signing off.");
+                        return;
+                    }
                 }
-                return;
+                System.out.println("Connection link is broken.");
             }
         }
     }

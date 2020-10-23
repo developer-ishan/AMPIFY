@@ -31,3 +31,7 @@ out/
 *.iml
 *.ipr
 *.iws
+
+##Static files
+*.mp3
+*.mp4

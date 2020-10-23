@@ -13,6 +13,7 @@ import commonPackages.responses.group.ListMembersResponse;
 import commonPackages.responses.group.MakeAdminResponse;
 import commonPackages.responses.group.CreateGroupResponse;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +50,19 @@ public class GroupRequestsHandler{
     public static Response create(CreateGroup req, Connection con) throws SQLException{
         String groupId = UUID.randomUUID().toString();
         String name = req.getName();
-        String userId = req.getUserId();
+        String userId;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                userId = token.getSubject();
+            } else {
+                return new CreateGroupResponse(ResponseCode.DENIED,"Login first.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new CreateGroupResponse(ResponseCode.DENIED,"Login first.");
+        }
 
         String query1 = "INSERT INTO groups(g_id,name) VALUES(?, ?)";
         String query2 = "INSERT INTO group_membership(u_id, g_id, status, isAdmin) values(?, ?, ?, ?)";
@@ -77,7 +90,19 @@ public class GroupRequestsHandler{
         return new CreateGroupResponse(ResponseCode.FAILURE,"Group Creating Failed");
     }
     public static Response invite(InviteUser req, Connection con) throws SQLException{
-        String by = req.getBy();
+        String by;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                by = token.getSubject();
+            } else {
+                return new InviteResponse(ResponseCode.DENIED,"Login first.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new InviteResponse(ResponseCode.DENIED,"Login first.");
+        }
         String userId = req.getUserId();
         String groupId = req.getGroupId();
         PreparedStatement ps;
@@ -105,7 +130,19 @@ public class GroupRequestsHandler{
 
     }
     public static Response makeAdmin(MakeAdmin req, Connection con) throws SQLException{
-        String by = req.getBy();
+        String by;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                by = token.getSubject();
+            } else {
+                return new MakeAdminResponse(ResponseCode.DENIED,"Login first.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new MakeAdminResponse(ResponseCode.DENIED,"Login first.");
+        }
         String userId = req.getUserId();
         String groupId = req.getGroupId();
         int role = getRole(by,groupId,con);
@@ -126,7 +163,19 @@ public class GroupRequestsHandler{
         }
     }
     public static Response getMembers(ListMembers req, Connection con) throws SQLException{
-        String userId = req.getUserId();
+        String userId;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                userId = token.getSubject();
+            } else {
+                return new ListMembersResponse(ResponseCode.DENIED,"Login first.",null);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new ListMembersResponse(ResponseCode.DENIED,"Login first.",null);
+        }
         String groupId = req.getGroupId();
 
         int role = getRole(userId,groupId,con);
