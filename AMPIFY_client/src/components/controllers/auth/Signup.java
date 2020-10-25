@@ -27,7 +27,7 @@ public class Signup {
         String password = this.password.getText();
         String pattern = "^(?=.*[0-9])"
                         + "(?=.*[a-z])(?=.*[A-Z])"
-                        + "(?=.*[@#$%^&+=])"
+                        + "(?=.*[@#$%^&+=-_])"
                         + "(?=\\S+$).{8,20}$";
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(password);
@@ -69,7 +69,9 @@ public class Signup {
         try {
             socket = new Socket("localhost",5000);
             Client client = new Client(socket);
+            System.out.println("before");
             client.sendRequest(req);
+            System.out.println("after");
             Response res = (Response) client.getResponse();
             System.out.println(res);
 
@@ -88,8 +90,7 @@ public class Signup {
                 confirmAlert.show();
             }
 
-
-            socket.close();
+//            socket.close();
             //Get him to login page create a new client
             //Once logged in propagate this client object through out the application
         } catch (IOException | ClassNotFoundException e) {

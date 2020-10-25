@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AMPIFY_client.src.components.controllers.MediaController">
+   <center>
+      <StackPane opacity="0.41" BorderPane.alignment="CENTER">
+         <children>
+            <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin></MediaView>
+         </children>
+      </StackPane>
+   </center>
+   <top>
+      <MenuBar prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#openSongMenu" text="Open File" />
+                  <MenuItem mnemonicParsing="false" onAction="#openSongFolder" text="Open Folder" />
+                  <MenuItem mnemonicParsing="false" text="Open Recent" />
+              <MenuItem mnemonicParsing="false" text="Downloads" />
+                  <MenuItem mnemonicParsing="false" text="Exit Player" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Tools">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Manage Queue" />
+                <MenuItem mnemonicParsing="false" text="Play" />
+                <MenuItem mnemonicParsing="false" text="Pause" />
+                  <MenuItem mnemonicParsing="false" text="Next" />
+                  <MenuItem mnemonicParsing="false" text="Previous" />
+                  <MenuItem mnemonicParsing="false" text="Repeat" />
+                  <MenuItem mnemonicParsing="false" text="Shuffle" />
+               </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Logout" />
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <VBox alignment="BOTTOM_CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Text fx:id="mediaplayed" fontSmoothingType="LCD" lineSpacing="1.0" strokeType="INSIDE" strokeWidth="0.0" text="--:--:--" textAlignment="CENTER" wrappingWidth="70.93664698600742">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Slider fx:id="progressBar" blockIncrement="2.0" majorTickUnit="2.0" minorTickCount="2" prefHeight="28.0" prefWidth="434.0">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Slider>
+                        <Text fx:id="mediaDuration" fontSmoothingType="LCD" lineSpacing="1.0" strokeType="INSIDE" strokeWidth="0.0" text="--:--:--" textAlignment="CENTER" wrappingWidth="61.336640501021975">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="49.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#previous" text="Previous">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#backward" text="&lt;&lt;&lt;">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#pause" text="Pause">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin></Button>
+                        <Button fx:id="playbtn" mnemonicParsing="false" onAction="#play" text="Play">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#forward" text="&gt;&gt;&gt;">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#next" text="Next">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="repeat" mnemonicParsing="false" onAction="#replay" text="Replay">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="Shuffle">
+                           <HBox.margin>
+                              <Insets right="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="135.0">
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </Slider>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="100">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
