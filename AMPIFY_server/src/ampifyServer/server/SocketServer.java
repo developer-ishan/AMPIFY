@@ -1,8 +1,5 @@
 package ampifyServer.server;
 
-import ampifyServer.requestHandler.UserRequestsHandler;
-import commonPackages.models.User;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,7 +7,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Vector;
 
 public class SocketServer {
@@ -34,6 +30,7 @@ public class SocketServer {
             return;
         } catch (IOException e) {
             System.err.println("Cannot Start Socket Server");
+            e.printStackTrace();
             return;
         }
 
@@ -50,6 +47,7 @@ public class SocketServer {
                 }
 
                 socket = serverSocket.accept();
+                System.out.println(socket);
                 System.out.println(socket.toString()+" is trying to login.");
 
                 //Obtain the Object output and input streams

@@ -1,5 +1,3 @@
-package AMPIFY_client.src.components.controllers;
-
 import AMPIFY_client.src.commonPackages.DoublyLinkedList;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;

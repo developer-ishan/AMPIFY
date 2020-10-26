@@ -1,6 +1,5 @@
 package commonPackages.responses.user;
 
-import ampifyServer.requestHandler.GroupRequestsHandler;
 import commonPackages.models.Group;
 import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;

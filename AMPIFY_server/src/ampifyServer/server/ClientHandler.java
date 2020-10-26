@@ -2,27 +2,19 @@ package ampifyServer.server;
 
 import ampifyServer.requestHandler.JWebToken;
 import ampifyServer.requestHandler.RequestHandler;
-import ampifyServer.requestHandler.UserRequestsHandler;
-import commonPackages.models.User;
 import commonPackages.requests.Request;
-import commonPackages.requests.auth.LoginRequest;
-import commonPackages.requests.auth.SignupRequest;
 import commonPackages.responses.Response;
-import commonPackages.responses.ResponseCode;
 import commonPackages.responses.auth.InvalidToken;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
-import commonPackages.responses.user.ListInvitesResponse;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ClientHandler implements Runnable{
 
@@ -46,11 +38,22 @@ public class ClientHandler implements Runnable{
     }
     @Override
     public void run() {
-        long b1=-1,b2=-1;
         while (true){
             try {
+                // get the request
                 Request req = (Request) this.getRequest();
-                if(!(req instanceof LoginRequest || req instanceof SignupRequest) && userId == null){
+                // process the request
+                Response res = RequestHandler.getResponse(req,con);
+                // send the response
+                this.sendReponse(res);
+                System.out.println(res);
+
+                if(res instanceof LoginResponse){
+                    LoginResponse lgres = (LoginResponse)res;
+
+                } else if(res instanceof SignupResponse){
+
+                } else {
                     JWebToken token = new JWebToken(
                             req.getToken()
                     );
@@ -62,26 +65,21 @@ public class ClientHandler implements Runnable{
                         continue;
                     }
                 }
-
-                Response res = RequestHandler.getResponse(req,con);
-                this.sendReponse(res);
-                System.out.println(res);
             }
-            catch (Exception e){
-                if(b1==-1)
-                    b1 = new Date().getTime();
-                else {
-                    long index = SocketServer.avalUsers.indexOf(userId);
-                    if(index!=-1)
-                        SocketServer.avalUsers.remove(index);
-                    // user will be given 10 sec timeout if connection is broken after
-                    // which he will be declared inactive
-                    if(new Date().getTime() - b1 >= 10000) {
-                        System.out.println("User signing off.");
-                        return;
-                    }
-                }
+            catch (IOException e){
+                long index = SocketServer.avalUsers.indexOf(userId);
+                if(index!=-1)
+                    SocketServer.avalUsers.remove(index);
                 System.out.println("Connection link is broken.");
+                return;
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (Exception e){
+                e.printStackTrace();
             }
         }
     }

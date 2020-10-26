@@ -5,12 +5,14 @@ import commonPackages.responses.ResponseCode;
 
 public class LoginResponse extends Response {
     private String token;
+    private String userId;
     public LoginResponse(ResponseCode code, String message){
         super(code,message);
     }
-    public LoginResponse(ResponseCode code, String message, String token) {
+    public LoginResponse(ResponseCode code, String message, String token, String userId) {
         super(code, message);
         this.token = token;
+        this.userId = userId;
     }
 
 

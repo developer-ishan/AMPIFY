@@ -35,3 +35,6 @@ out/
 ##Static files
 *.mp3
 *.mp4
+
+##userdata
+user_data/

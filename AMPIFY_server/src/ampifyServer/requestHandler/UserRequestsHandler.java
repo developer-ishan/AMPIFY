@@ -3,9 +3,6 @@ package ampifyServer.requestHandler;
 import commonPackages.models.Group;
 import commonPackages.models.User;
 import commonPackages.requests.auth.LoginRequest;
-
-import static commonPackages.responses.ResponseCode.*;
-
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.requests.group.LeaveGroup;
 import commonPackages.requests.user.AcceptInvite;
@@ -15,11 +12,9 @@ import commonPackages.requests.user.ListInvites;
 import commonPackages.responses.ResponseCode;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
-import commonPackages.responses.group.CreateGroupResponse;
 import commonPackages.responses.user.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -31,6 +26,8 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+import static commonPackages.responses.ResponseCode.*;
 
 public class UserRequestsHandler{
 
@@ -94,7 +91,7 @@ public class UserRequestsHandler{
             String token = new JWebToken(jwtPayload).toString();
 
 
-            return new LoginResponse(SUCCESS,"Welcome",token);
+            return new LoginResponse(SUCCESS,"Welcome",token, userId);
         }
         return new LoginResponse(DENIED,"Invalid Credentials");
     }
