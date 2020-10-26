@@ -4,11 +4,13 @@ import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.requests.group.*;
+import commonPackages.requests.song.ListSongs;
 import commonPackages.requests.user.AcceptInvite;
 import commonPackages.requests.user.DeclineInvite;
 import commonPackages.requests.user.ListGroups;
 import commonPackages.requests.user.ListInvites;
 import commonPackages.responses.Response;
+import commonPackages.responses.song.ListSongsResponse;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -52,6 +54,9 @@ public class RequestHandler {
         }
         else if (req instanceof MakeAdmin){
             return GroupRequestsHandler.makeAdmin((MakeAdmin) req,con);
+        }
+        else if(req instanceof ListSongs){
+            return SongHandler.listAll((ListSongs) req,con);
         }
         else{
             return null;
