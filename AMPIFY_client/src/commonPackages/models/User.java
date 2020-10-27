@@ -1,18 +1,14 @@
 package commonPackages.models;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class User implements Serializable {
     protected String name;
     protected String id;
     protected String email;
     protected String doj;
+    protected byte[] image;
     //group info
     protected ArrayList<Song> likes;
     protected ArrayList<Group> groups;
@@ -29,7 +25,7 @@ public class User implements Serializable {
     public User(String id){
         this.id = id;
     }
-
+    public User (){}
     @Override
     public String toString() {
         return "User{" +
@@ -39,5 +35,31 @@ public class User implements Serializable {
                 '}';
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
 }

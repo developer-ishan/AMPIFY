@@ -50,9 +50,12 @@ public class ClientHandler implements Runnable{
 
                 if(res instanceof LoginResponse){
                     LoginResponse lgres = (LoginResponse)res;
-
+                    userId = lgres.getUser().getId();
+                    long index = SocketServer.avalUsers.indexOf(userId);
+                    if(index==-1)
+                        SocketServer.avalUsers.add(userId);
                 } else if(res instanceof SignupResponse){
-
+                    continue;
                 } else {
                     JWebToken token = new JWebToken(
                             req.getToken()

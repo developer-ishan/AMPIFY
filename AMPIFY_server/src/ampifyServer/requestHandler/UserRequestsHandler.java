@@ -72,8 +72,11 @@ public class UserRequestsHandler{
         result = preStat.executeQuery();
 
         if(result.next()){
-            String userId = result.getString("u_id");
-            setAval(con,userId,true);
+            User user = new User();
+            user.setId(result.getString("u_id"));
+            user.setName(result.getString("name"));
+            user.setEmail(result.getString("email"));
+            user.setImage(result.getBytes("image"));
 
 
             int EXPIRY_DAYS = 30;
@@ -83,7 +86,7 @@ public class UserRequestsHandler{
 
             JSONArray audArray = new JSONArray();
             audArray.put("user");
-            jwtPayload.put("sub", userId);
+            jwtPayload.put("sub", user.getId());
 
             jwtPayload.put("aud", audArray);
             LocalDateTime ldt = LocalDateTime.now().plusDays(EXPIRY_DAYS);
@@ -91,7 +94,7 @@ public class UserRequestsHandler{
             String token = new JWebToken(jwtPayload).toString();
 
 
-            return new LoginResponse(SUCCESS,"Welcome",token, userId);
+            return new LoginResponse(SUCCESS,"Welcome",token, user);
         }
         return new LoginResponse(DENIED,"Invalid Credentials");
     }

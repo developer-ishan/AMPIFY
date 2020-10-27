@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="components.controllers.user.Home"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox prefHeight="61.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField prefHeight="61.0" prefWidth="305.0" promptText="Search" />
+            <Button mnemonicParsing="false" prefHeight="62.0" prefWidth="73.0" text="Go" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="61.0" prefWidth="632.0">
+               <children>
+                  <ImageView fx:id="pic" fitHeight="60.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="name" prefHeight="68.0" prefWidth="161.0" text="Name" />
+                  <MenuButton mnemonicParsing="false" prefHeight="34.0" prefWidth="32.0">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

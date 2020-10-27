@@ -87,8 +87,7 @@ public class ClientHandler implements Runnable{
         if("/".equals(path)){
             path = "/index.html";
         }
-
-        return Paths.get("F:\\Projects\\AMPIFY\\AMPIFY_server\\Ampify_Data\\songs",path);
+        return Paths.get("F:\\Projects\\AMPIFY\\AMPIFY_server\\Ampify_Data",path);
     }
 
     public String getContentType(Path filePath){
@@ -98,6 +97,10 @@ public class ClientHandler implements Runnable{
             return "audio/mpeg";
         else if(filePath.endsWith(".mp4"))
             return "video/mpeg";
+        else if(filePath.endsWith(".jpg"))
+            return "image/jpeg";
+        else if(filePath.endsWith(".png"))
+            return "image/png";
         else
             return "text/html";
     }

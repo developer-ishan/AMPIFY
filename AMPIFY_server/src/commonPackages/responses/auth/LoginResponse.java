@@ -1,18 +1,19 @@
 package commonPackages.responses.auth;
 
+import commonPackages.models.User;
 import commonPackages.responses.Response;
 import commonPackages.responses.ResponseCode;
 
 public class LoginResponse extends Response {
     private String token;
-    private String userId;
+    private User user;
     public LoginResponse(ResponseCode code, String message){
         super(code,message);
     }
-    public LoginResponse(ResponseCode code, String message, String token, String userId) {
+    public LoginResponse(ResponseCode code, String message, String token, User user) {
         super(code, message);
         this.token = token;
-        this.userId = userId;
+        this.user = user;
     }
 
 
@@ -22,6 +23,10 @@ public class LoginResponse extends Response {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

@@ -6,6 +6,7 @@ import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.responses.Response;
 import commonPackages.responses.auth.LoginResponse;
+import components.controllers.user.Home;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -89,27 +90,35 @@ public class Login {
             else {
                 // the login is successful
                 // extract the jwt token and save locally
-                File token = new File("F:\\Projects\\AMPIFY\\AMPIFY_client\\user_data\\token");
-                DataOutputStream dos = new DataOutputStream(new FileOutputStream(token));
-                dos.writeBytes(res.getToken());
+                try{
+                    File token = new File("F:\\Projects\\AMPIFY\\AMPIFY_client\\user_data\\token");
+                    DataOutputStream dos = new DataOutputStream(new FileOutputStream(token));
+                    dos.writeBytes(res.getToken());
+                    dos.close();
+                } catch (IOException e){
+                    System.out.println("The token is not stored try again.");
+                }
+
                 confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 confirmAlert.setHeaderText("Successfully Logged In!!");
                 confirmAlert.show();
 
                 // send the user to the home page
                 Stage stage = (Stage) loginBtn.getScene().getWindow();
-                Parent root = null;
 
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/user/home.fxml"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                stage.setScene(new Scene(root, 450, 350));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/home.fxml"));
+
+                Home home = new Home();
+                home.setUser(res.getUser());
+                loader.setController(home);
+
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+
+                stage.setWidth(800);
+                stage.setHeight(800);
+                stage.setScene(scene);
             }
-
-            socket.close();
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
