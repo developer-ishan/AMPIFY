@@ -5,10 +5,14 @@ import commonPackages.requests.Request;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.responses.Response;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import socket.Client;
 
 import java.io.IOException;
@@ -20,6 +24,17 @@ public class Signup {
     public TextField name, email;
     public PasswordField password;
     public Button signupBtn;
+    public Button backBtn;
+
+    public void toLanding(ActionEvent actionEvent) throws Exception {
+
+        Stage stage = (Stage) backBtn.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/landing.fxml"));
+        Parent root = loader.load();
+
+        stage.setScene(new Scene(root, 300, 400));
+    }
 
     public void signup(ActionEvent actionEvent){
         String name = this.name.getText();

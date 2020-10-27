@@ -35,7 +35,7 @@ public class Landing {
         } catch (IOException e){
             e.printStackTrace();
         }
-        stage.setScene(new Scene(root,450,350));
+        stage.setScene(new Scene(root,450,300));
     }
 
     public void goOfflineListener(ActionEvent actionEvent){

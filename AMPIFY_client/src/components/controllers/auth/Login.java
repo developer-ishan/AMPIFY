@@ -30,6 +30,17 @@ public class Login {
     public TextField email;
     public PasswordField passwd;
     public Button loginBtn;
+    public  Button backBtn;
+
+    public void toLanding(ActionEvent actionEvent) throws Exception {
+
+        Stage stage = (Stage) backBtn.getScene().getWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/landing.fxml"));
+        Parent root = loader.load();
+
+        stage.setScene(new Scene(root, 300, 400));
+    }
 
     public void login(ActionEvent actionEvent) {
         String email = this.email.getText();
@@ -91,7 +102,8 @@ public class Login {
                 // the login is successful
                 // extract the jwt token and save locally
                 try{
-                    File token = new File("F:\\Projects\\AMPIFY\\AMPIFY_client\\user_data\\token");
+                    String tokenPath = System.getProperty("user.dir");
+                    File token = new File(tokenPath + "\\user_data\\token");
                     DataOutputStream dos = new DataOutputStream(new FileOutputStream(token));
                     dos.writeBytes(res.getToken());
                     dos.close();
@@ -115,8 +127,8 @@ public class Login {
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
 
-                stage.setWidth(800);
-                stage.setHeight(800);
+                stage.setWidth(1920);
+                stage.setHeight(1080);
                 stage.setScene(scene);
             }
         } catch (IOException | ClassNotFoundException e) {

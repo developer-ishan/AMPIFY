@@ -1,11 +1,17 @@
 package components.controllers.user;
 
 import commonPackages.models.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import socket.Client;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +24,12 @@ public class Home implements Initializable {
 
     private Client client;
     private User user;
+    public Button createGroupBtn;
+
+    public void createGroup(ActionEvent actionEvent) throws Exception {
+
+        
+    }
 
     @FXML
     private Label name;

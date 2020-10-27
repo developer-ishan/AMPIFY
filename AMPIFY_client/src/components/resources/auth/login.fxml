@@ -15,5 +15,10 @@
          <font>
             <Font size="18.0" />
          </font></Label>
+      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#toLanding" prefHeight="34.0" prefWidth="34.0" text="&lt;">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

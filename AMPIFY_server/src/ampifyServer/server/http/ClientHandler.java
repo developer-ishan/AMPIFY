@@ -90,7 +90,8 @@ public class ClientHandler implements Runnable{
         if("/".equals(path)){
             path = "/index.html";
         }
-        return Paths.get("F:\\Projects\\AMPIFY\\AMPIFY_server\\Ampify_Data",path);
+        String RootPath = System.getProperty("user.dir");
+        return Paths.get(RootPath, "Ampify_Data",path);
     }
 
     public String getContentType(Path filePath){
