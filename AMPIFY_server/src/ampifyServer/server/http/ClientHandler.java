@@ -75,9 +75,12 @@ public class ClientHandler implements Runnable{
                 sendResponse(200,filePath);
             } else {
                 // 404
-                sendResponse(404,getFilePath("not_found.html"));
+                System.out.println(path);
+                if(path.endsWith(".jpg") || path.endsWith(".png"))
+                    sendResponse(404,getFilePath("/profile_pics/default.jpg"));
+                else
+                    sendResponse(404,getFilePath("not_found.html"));
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
