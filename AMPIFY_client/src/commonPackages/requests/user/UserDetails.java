@@ -1,12 +1,11 @@
-package commonPackages.requests.song;
+package commonPackages.requests.user;
 
 import commonPackages.requests.Request;
 
-public class ListSongs extends Request {
+public class UserDetails extends Request {
     private String token;
-
-    public ListSongs(String token){
-        this.token=token;
+    public UserDetails(String token){
+        this.token = token;
     }
 
     @Override

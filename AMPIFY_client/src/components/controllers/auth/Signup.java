@@ -108,7 +108,7 @@ public class Signup {
 //            socket.close();
             //Get him to login page create a new client
             //Once logged in propagate this client object through out the application
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             //This means server is down
             //redirect to landing page or ask to go offline
             e.printStackTrace();

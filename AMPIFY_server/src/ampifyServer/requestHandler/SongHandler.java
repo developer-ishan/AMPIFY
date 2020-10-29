@@ -5,7 +5,6 @@ import commonPackages.models.Song;
 import commonPackages.requests.song.ListSongs;
 import commonPackages.responses.ResponseCode;
 import commonPackages.responses.song.ListSongsResponse;
-import commonPackages.responses.user.LeaveGroupResponse;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -23,6 +22,9 @@ public class SongHandler {
         JWebToken token;
         try {
             token = new JWebToken(req.getToken());
+            if(token == null){
+                return new ListSongsResponse(ResponseCode.DENIED, "Login first.", null);
+            }
             if (token.isValid()) {
                 userId = token.getSubject();
             } else {

@@ -1,14 +1,18 @@
 package components.controllers.auth;
 
 import commonPackages.requests.auth.SignupRequest;
+import commonPackages.requests.user.UserDetails;
 import commonPackages.responses.ResponseCode;
 import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.responses.Response;
 import commonPackages.responses.auth.LoginResponse;
+import commonPackages.responses.user.UserDetailsResponse;
 import components.controllers.user.Home;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -24,13 +28,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ResourceBundle;
 
 public class Login {
-    public TextField email;
-    public PasswordField passwd;
-    public Button loginBtn;
-    public  Button backBtn;
+    @FXML
+    private TextField email;
+    @FXML
+    private PasswordField passwd;
+    @FXML
+    private Button loginBtn;
+    @FXML
+    private  Button backBtn;
 
     public void toLanding(ActionEvent actionEvent) throws Exception {
 
@@ -78,11 +88,11 @@ public class Login {
         Request req = new LoginRequest(email, passwd);
         System.out.println(String.format("%s\n%s\n",email,passwd));
         Socket socket = null;
-
+        Client client = null;
         try {
             // connect to server
             socket = new Socket("localhost",5000);
-            Client client = new Client(socket);
+            client = new Client(socket);
             //send the login request
             client.sendRequest(req);
             //get the response
@@ -121,6 +131,7 @@ public class Login {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/home.fxml"));
 
                 Home home = new Home();
+                home.setClient(client);
                 home.setUser(res.getUser());
                 loader.setController(home);
 
@@ -131,7 +142,7 @@ public class Login {
                 stage.setHeight(1080);
                 stage.setScene(scene);
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

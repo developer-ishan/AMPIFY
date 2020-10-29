@@ -5,10 +5,7 @@ import commonPackages.models.User;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.requests.group.LeaveGroup;
-import commonPackages.requests.user.AcceptInvite;
-import commonPackages.requests.user.DeclineInvite;
-import commonPackages.requests.user.ListGroups;
-import commonPackages.requests.user.ListInvites;
+import commonPackages.requests.user.*;
 import commonPackages.responses.ResponseCode;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
@@ -99,6 +96,42 @@ public class UserRequestsHandler{
         return new LoginResponse(DENIED,"Invalid Credentials");
     }
 
+    public static UserDetailsResponse userDetails (UserDetails req, Connection con) throws SQLException {
+        String userId;
+        JWebToken token;
+        try {
+            if(req.getToken() == null)
+                return new UserDetailsResponse(ResponseCode.DENIED,"Login first.",null);
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                userId = token.getSubject();
+            } else {
+                return new UserDetailsResponse(ResponseCode.DENIED,"Login first.",null);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new UserDetailsResponse(ResponseCode.DENIED,"Login first.",null);
+        }
+        String query = "SELECT * FROM user WHERE u_id = ?";
+
+        PreparedStatement preStat;
+        ResultSet result;
+
+        preStat = con.prepareStatement(query);
+        preStat.setString(1,userId);
+        result = preStat.executeQuery();
+
+        if(result.next()){
+            User user = new User();
+            user.setId(result.getString("u_id"));
+            user.setName(result.getString("name"));
+            user.setEmail(result.getString("email"));
+            user.setImage(result.getBytes("image"));
+
+            return new UserDetailsResponse(SUCCESS,"Welcome", user);
+        }
+        return new UserDetailsResponse(FAILURE,"No such account exists",null);
+    }
     //Group info
     public static ListGroupsResponse getGroups(ListGroups req, Connection con) throws SQLException{
         String userId;

@@ -65,12 +65,12 @@ public class ClientHandler implements Runnable{
                 String header = requestLines[h];
                 headers.add(header);
             }
-
             Path filePath = getFilePath(path);
             System.out.println(path);
 
             if (Files.exists(filePath)) {
                 // file exist
+
                 String contentType = getContentType(filePath);
                 sendResponse(200,filePath);
             } else {

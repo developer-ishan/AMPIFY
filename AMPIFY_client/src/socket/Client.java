@@ -2,9 +2,7 @@ package socket;
 
 import commonPackages.requests.Request;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -17,14 +15,42 @@ public class Client {
         this.ooi = new ObjectInputStream(socket.getInputStream());
     }
 
-    public void sendRequest(Request req) throws IOException{
-        oos.writeObject(req);
-        oos.flush();
+    public void sendRequest(Request req){
+        try {
+            oos.writeObject(req);
+            oos.flush();
+        } catch (IOException e) {
+            System.out.println("Server Down.");
+            e.printStackTrace();
+        }
     }
-    public Object getResponse() throws IOException, ClassNotFoundException {
-        return ooi.readObject();
+    public Object getResponse(){
+        try {
+            return ooi.readObject();
+        } catch (IOException e) {
+            System.out.println("Server Down.");
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Invalid Response.");
+            e.printStackTrace();
+        }
+        return null;
     }
-
+    public String getToken(){
+        try{
+            String tokenPath = System.getProperty("user.dir");
+            File token = new File(tokenPath + "\\user_data\\token");
+            BufferedReader br = new BufferedReader(new FileReader(token));
+            String tokenVal =  br.readLine();
+            if(tokenVal == null)
+                throw new IOException("Token not found login first.");
+            else
+                return tokenVal;
+        } catch (IOException e){
+            System.out.println("The token is not stored try again.");
+        }
+        return null;
+    }
     @Override
     public String toString() {
         return "Client{" +
