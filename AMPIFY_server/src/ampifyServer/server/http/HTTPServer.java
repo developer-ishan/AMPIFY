@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class HTTPServer {
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(8080);
+        ServerSocket serverSocket = new ServerSocket(8081);
 
         System.out.println("TCPServer listening for client on port 8080");
 

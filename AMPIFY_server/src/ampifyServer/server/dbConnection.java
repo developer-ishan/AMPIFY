@@ -20,7 +20,8 @@ public class dbConnection {
 //    private static final String user   = "root";
 //    private static final String pass  = "root";
     private static final String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    private static  final String dbURL = "jdbc:mysql://localhost:3306/ampify";
+    private static  final String dbURL = "jdbc:mysql://localhost:3306/ampify?useUnicode=true&useJDBCCompliantTimezone" +
+            "Shift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 //    // Database credentials
     private static final String user   = "root";
     private static final String pass  = "";

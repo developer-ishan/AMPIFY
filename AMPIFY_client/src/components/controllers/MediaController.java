@@ -1,4 +1,9 @@
+package components.controllers;
+
 import AMPIFY_client.src.commonPackages.DoublyLinkedList;
+import commonPackages.models.Playlist;
+import commonPackages.models.Song;
+import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -16,35 +21,49 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 
-public class MediaController {
-    //Song song=new Song("TokyoGhoul","....", InetAddress.getLocalHost());
-    //URL url=new URL("http://localhost:8888"+"/"+ song.getSongname()+".mp3");
+public class MediaController{
+
     private Media m;
     private MediaPlayer player;
     private int repeatTask=0;
     @FXML
-    private final MediaView mediaView=new MediaView();
+    private Slider progressBar=new Slider();
     @FXML
-    private Slider progressBar;
+    private Text mediaDuration=new Text();
     @FXML
-    private Text mediaDuration;
-    @FXML
-    private Text mediaplayed;
+    private Text mediaplayed=new Text();
     @FXML
     private Button repeat;
     @FXML
-    private Slider volumeSlider;
+    private Slider volumeSlider=new Slider();
     public MediaController() throws UnknownHostException, MalformedURLException {
     }
     private DoublyLinkedList<Media> playlistLocal =new DoublyLinkedList<>();
     DoublyLinkedList.Node head= playlistLocal.head;
+
+    public MediaController(Song song) {
+        try {
+            URL url=new URL("http://localhost:8081/songs/"+song.getId()+".mp3");
+            m=new Media(url.toString());
+            player=new MediaPlayer(m);
+            player.play();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Requiredmethods();
+    }
+    public MediaController(Playlist playlist){
+
+    }
     @FXML
     void openSongFolder(ActionEvent event) throws MalformedURLException {
         DirectoryChooser chooser=new DirectoryChooser();
@@ -150,7 +169,6 @@ public class MediaController {
 
     @FXML
     void play(ActionEvent event) throws MalformedURLException {
-        player=new MediaPlayer(m);
         Requiredmethods();
         player.play();
         replay(event);
