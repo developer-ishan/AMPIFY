@@ -38,7 +38,7 @@ public class SongHandler {
         // if the user if indeed verified
         ArrayList<Song> songs = new ArrayList<>();
         try {
-            String query = "SELECT song.*,count(lm.s_id) as likes  from song left join likes_membership lm on song.s_id = lm.s_id group by  lm.s_id;";
+            String query = "SELECT song.*,count(lm.s_id) as likes  from song left join likes_membership lm on song.s_id = lm.s_id group by  song.s_id;";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
