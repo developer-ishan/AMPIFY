@@ -7,6 +7,7 @@ import commonPackages.requests.song.ListSongs;
 import commonPackages.responses.Response;
 import commonPackages.responses.song.ListSongsResponse;
 import commonPackages.responses.user.ListInvitesResponse;
+import components.controllers.MediaController;
 import components.controllers.cards.SongCard;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +18,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import socket.Client;
 
@@ -39,8 +42,6 @@ public class Home implements Initializable {
     public Button createGroupBtn;
 
     public void createGroup(ActionEvent actionEvent) throws Exception {
-
-        
     }
 
     @FXML
@@ -52,11 +53,23 @@ public class Home implements Initializable {
     public Home(){
         System.out.println("Home constructor is called.");
     }
-
+    public Home(Song song){
+        new MediaController(song);
+    }
+    @FXML
+    private Slider progressBar;
+    @FXML
+    private Text mediaDuration;
+    @FXML
+    private Text mediaplayed;
+    @FXML
+    private Button repeat;
+    @FXML
+    private Slider volumeSlider;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         name.setText(user.getName());
-        Image image = new Image("http://localhost:8080/profile_pics/default.jpg",true);
+        Image image = new Image("http://localhost:8081/profile_pics/default.jpg",true);
         pic.setImage(image);
         setSongs();
     }
@@ -98,4 +111,5 @@ public class Home implements Initializable {
             }
         });
     }
+
 }
