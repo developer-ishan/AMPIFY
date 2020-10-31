@@ -9,6 +9,7 @@ import commonPackages.responses.Response;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.user.UserDetailsResponse;
 import components.controllers.user.Home;
+import components.controllers.user.Notifications;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -7,6 +7,7 @@ import commonPackages.requests.group.*;
 import commonPackages.requests.playlist.AddSong;
 import commonPackages.requests.playlist.CreatePlaylist;
 import commonPackages.requests.playlist.ListPlaylists;
+import commonPackages.requests.song.ListSearch;
 import commonPackages.requests.song.ListSongs;
 import commonPackages.requests.user.*;
 import commonPackages.responses.Response;
@@ -16,15 +17,13 @@ import java.sql.SQLException;
 
 public class RequestHandler {
     public static Response getResponse(Request req, Connection con) throws SQLException {
+
         if(req instanceof SignupRequest){
             return UserRequestsHandler.signup((SignupRequest) req,con);
         }
         //Authentication requests
         else if(req instanceof LoginRequest){
             return UserRequestsHandler.login((LoginRequest) req,con);
-        }
-        else if(req instanceof ListInvites){
-            return UserRequestsHandler.getInvites((ListInvites) req,con);
         }
         else if(req instanceof UserDetails){
             return UserRequestsHandler.userDetails((UserDetails) req,con);
@@ -38,9 +37,6 @@ public class RequestHandler {
         }
         else if(req instanceof ListGroups){
             return UserRequestsHandler.getGroups((ListGroups) req,con);
-        }
-        else if(req instanceof ListInvites){
-            return UserRequestsHandler.getInvites((ListInvites) req,con);
         }
         else if(req instanceof CreateGroup){
             return GroupRequestsHandler.create((CreateGroup) req,con);
@@ -68,6 +64,9 @@ public class RequestHandler {
         }
         else if(req instanceof AddSong){
             return PlaylistHandler.addSong((AddSong) req,con);
+        }
+        else if(req instanceof ListSearch){
+            return SearchHandler.listSearch((ListSearch) req,con);
         }
         else{
             return null;

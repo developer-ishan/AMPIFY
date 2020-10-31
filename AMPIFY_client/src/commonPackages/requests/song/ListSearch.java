@@ -21,5 +21,16 @@ public class ListSearch extends Request {
 
     public String getSearchQuery() { return  searchQuery; }
 
-    public String getSearchCode() { return searchQuery;}
+    public SearchFilterCode getSearchCode() {
+        return searchCode;
+    }
+
+    @Override
+    public String toString() {
+        return "ListSearch{" +
+                "token='" + token + '\'' +
+                ", searchQuery='" + searchQuery + '\'' +
+                ", searchCode=" + searchCode +
+                '}';
+    }
 }

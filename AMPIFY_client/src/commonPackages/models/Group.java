@@ -3,7 +3,7 @@ package commonPackages.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Group implements Serializable {
+public class Group implements Serializable{
     private String id;
     private String name;
     private String date;
@@ -54,5 +54,17 @@ public class Group implements Serializable {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public static boolean search(ArrayList<Group> g1,ArrayList<Group> g2){
+        int l1 = g1.size();
+        int l2 = g2.size();
+        for (int i = 0; i < l1; i++) {
+            for (int j = 0; j < l2; j++) {
+                if(g1.get(i).id == g2.get(j).id)
+                    return true;
+            }
+        }
+        return false;
     }
 }

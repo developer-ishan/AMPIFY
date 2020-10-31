@@ -35,6 +35,8 @@ public class Client {
             e.printStackTrace();
         }
         return null;
+    }public Object getNotification() throws IOException, ClassNotFoundException{
+        return ooi.readObject();
     }
     public String getToken(){
         try{

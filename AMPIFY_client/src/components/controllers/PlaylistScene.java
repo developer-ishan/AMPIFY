@@ -58,7 +58,7 @@ public class PlaylistScene implements Initializable {
     }
 
     @FXML
-    void addSongListener(ActionEvent event){
+    void addSongListener(ActionEvent event) throws IOException, ClassNotFoundException {
         if(selectedSong.length()<1){
             errAlert.setHeaderText("Invalid Input");
             errAlert.setContentText("No song selected");
@@ -91,13 +91,15 @@ public class PlaylistScene implements Initializable {
         songMenu.setText("Select Song");
     }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize (URL url, ResourceBundle resourceBundle) {
         this.name.setText(playlist.getName());
         setSongs(playlist.getSongs());
 
         Request req = new ListSongs(client.getToken());
         client.sendRequest(req);
-        ListSongsResponse res = (ListSongsResponse) client.getResponse();
+        ListSongsResponse res = null;
+
+        res = (ListSongsResponse) client.getResponse();
         System.out.println("resp received");
         ArrayList<Song> songArrayList = res.getSongs();
         songArrayList.forEach(song -> {

@@ -2,11 +2,14 @@ package ampifyServer.server;
 
 import ampifyServer.requestHandler.JWebToken;
 import ampifyServer.requestHandler.RequestHandler;
+import ampifyServer.requestHandler.UserRequestsHandler;
+import commonPackages.requests.GetNotifications;
 import commonPackages.requests.Request;
 import commonPackages.responses.Response;
 import commonPackages.responses.auth.InvalidToken;
 import commonPackages.responses.auth.LoginResponse;
 import commonPackages.responses.auth.SignupResponse;
+import commonPackages.responses.user.ListInvitesResponse;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -42,6 +45,30 @@ public class ClientHandler implements Runnable{
             try {
                 // get the request
                 Request req = (Request) this.getRequest();
+
+                // if the request is of notifications
+                // then this thread needs to be notification thread
+                if(req instanceof GetNotifications){
+                    System.out.println("Handler converted to notification handler.");
+                    ListInvitesResponse invitesR;
+                    userId = ((GetNotifications) req).getUserId();
+
+                    // send for the first time
+                    //INVITES
+                    ListInvitesResponse invitesResponse = UserRequestsHandler.getInvites(userId,con);
+                    this.sendReponse(invitesResponse);
+
+                    while (true){
+
+                        // refresh only if the notification is different from that of last one
+                        ListInvitesResponse invitesResponse_new = UserRequestsHandler.getInvites(userId,con);
+                        if(invitesResponse_new!=null && !invitesResponse_new.toString().equals(invitesResponse.toString())){
+                            invitesResponse = invitesResponse_new;
+                            this.sendReponse(invitesResponse);
+                        }
+                    }
+
+                }
                 // process the request
                 Response res = RequestHandler.getResponse(req,con);
                 // send the response
@@ -62,6 +89,9 @@ public class ClientHandler implements Runnable{
                     );
                     if(token.isValid()){
                         userId = token.getSubject();
+                        long index = SocketServer.avalUsers.indexOf(userId);
+                        if(index==-1)
+                            SocketServer.avalUsers.add(userId);
                         SocketServer.avalUsers.add(userId);
                     } else {
                         this.sendReponse(new InvalidToken());

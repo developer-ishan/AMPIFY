@@ -79,9 +79,6 @@ public class SongHandler {
                 Artist artist = new Artist(rs.getString("name"),rs.getString("a_id"),rs.getString("active_from"),rs.getString("email"));
                 artists.add(artist);
             }
-            artists.forEach(artist -> {
-                System.out.println(artist);
-            });
             return artists;
         } catch (SQLException e){
             e.printStackTrace();
