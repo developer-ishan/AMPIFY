@@ -121,19 +121,21 @@ public class PlaylistScene implements Initializable {
     };
 
     public void setSongs(ArrayList<Song> songs){
-        songs.forEach((song)->{
-            System.out.println(song);
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/cards/songCard.fxml"));
-                SongCard songCard = new SongCard();
-                songCard.setSong(song);
-                loader.setController(songCard);
-                Node node = loader.load();
-                songsList.getChildren().add(node);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        if(songs != null){
+            songs.forEach((song)->{
+                System.out.println(song);
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/cards/songCard.fxml"));
+                    SongCard songCard = new SongCard();
+                    songCard.setSong(song);
+                    loader.setController(songCard);
+                    Node node = loader.load();
+                    songsList.getChildren().add(node);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     public Playlist getPlaylist() {
