@@ -19,6 +19,7 @@
                   <Label fx:id="name" alignment="CENTER" prefHeight="17.0" prefWidth="160.0" text="Name" />
                   <Label fx:id="duration" alignment="CENTER" prefHeight="17.0" prefWidth="156.0" text="Duration" />
                   <Button fx:id="play" mnemonicParsing="false" prefHeight="63.0" prefWidth="102.0" text="Play" />
+                  <Button fx:id="download" mnemonicParsing="false" prefHeight="63.0" prefWidth="102.0" text="Download" />
                </children>
             </HBox>
          </children>

@@ -21,5 +21,5 @@ public class ListSearch extends Request {
 
     public String getSearchQuery() { return  searchQuery; }
 
-    public String getSearchCode() { return searchQuery}
+    public String getSearchCode() { return searchQuery;}
 }
