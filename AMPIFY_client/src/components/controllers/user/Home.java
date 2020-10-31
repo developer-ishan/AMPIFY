@@ -159,6 +159,7 @@ public class Home implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/cards/playlistCard.fxml"));
                     PlaylistCard playlistCard = new PlaylistCard();
                     playlistCard.setPlaylist(res.getPlaylist());
+                    playlistCard.setClient(client);
                     loader.setController(playlistCard);
                     Node node = loader.load();
                     playlistList.getChildren().add(node);
@@ -229,6 +230,7 @@ public class Home implements Initializable {
         ListSongsResponse res = (ListSongsResponse) client.getResponse();
         System.out.println("resp received");
         ArrayList<Song> songArrayList = res.getSongs();
+
         songArrayList.forEach((song)->{
             System.out.println(song);
             try {
@@ -271,6 +273,7 @@ public class Home implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/cards/playlistCard.fxml"));
                 PlaylistCard playlistCard = new PlaylistCard();
                 playlistCard.setPlaylist(playlist);
+                playlistCard.setClient(client);
                 loader.setController(playlistCard);
                 Node node = loader.load();
                 int role = playlist.getRole();

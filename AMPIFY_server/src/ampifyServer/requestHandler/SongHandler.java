@@ -88,4 +88,33 @@ public class SongHandler {
             return null;
         }
     }
+    public static Song getSongFromDB(String songId,Connection con) throws SQLException {
+        String query = "SELECT song.*,count(lm.s_id) as likes  " +
+                "from song left join likes_membership lm on song.s_id = lm.s_id" +
+                " WHERE song.s_id = ? " +
+                "group by  song.s_id;";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, songId);
+        ResultSet rs = ps.executeQuery();
+        Song song = new Song();
+        song.setId(songId);
+        if (rs.next()) {
+            ArrayList<Artist> artists = getArtists(songId, con);
+            String year = rs.getString("year");
+            String genre = rs.getString("genre");
+            String name = rs.getString("title");
+            double duration = rs.getDouble("duration");
+            long likes = rs.getLong("likes");
+            String lyrics = "lyrics from srt file";
+            song.setGenre(genre);
+            song.setDuration(duration);
+            song.setArtists(artists);
+            song.setId(songId);
+            song.setLikes(likes);
+            song.setLyrics(lyrics);
+            song.setName(name);
+            song.setYear(year);
+        }
+        return song;
+    }
 }

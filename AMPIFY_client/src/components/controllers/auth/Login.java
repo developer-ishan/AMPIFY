@@ -118,7 +118,7 @@ public class Login {
                     dos.writeBytes(res.getToken());
                     dos.close();
                 } catch (IOException e){
-                    System.out.println("The token is not stored try again.");
+                    System.out.println("The token cannot be stored try again.");
                 }
 
                 confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
