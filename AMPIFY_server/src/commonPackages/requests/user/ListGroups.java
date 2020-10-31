@@ -3,12 +3,13 @@ package commonPackages.requests.user;
 import commonPackages.requests.Request;
 
 public class ListGroups extends Request {
-    private String userId;
-    public ListGroups(String userId){
-        this.userId = userId;
+    private String token;
+    public ListGroups(String token){
+        this.token = token;
     }
 
-    public String getUserId() {
-        return userId;
+    @Override
+    public String getToken() {
+        return token;
     }
 }

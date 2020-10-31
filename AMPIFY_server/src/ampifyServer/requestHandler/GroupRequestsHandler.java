@@ -1,5 +1,6 @@
 package ampifyServer.requestHandler;
 
+import commonPackages.models.Group;
 import commonPackages.models.GroupMember;
 import commonPackages.requests.group.CreateGroup;
 import commonPackages.requests.group.InviteUser;
@@ -80,8 +81,8 @@ public class GroupRequestsHandler{
 
         try {
             preStat1.executeUpdate();
-            preStat2.executeQuery();
-            Response res = new CreateGroupResponse(ResponseCode.SUCCESS,"Group Created Successfully",groupId);
+            preStat2.executeUpdate();
+            Response res = new CreateGroupResponse(ResponseCode.SUCCESS,"Group Created Successfully",new Group(groupId,name));
             return res;
         }catch (SQLException e){
             e.printStackTrace();

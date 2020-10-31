@@ -1,10 +1,10 @@
-package commonPackages.requests.user;
+package commonPackages.requests.playlist;
 
 import commonPackages.requests.Request;
 
-public class ListGroups extends Request {
+public class ListPlaylists extends Request {
     private String token;
-    public ListGroups(String token){
+    public ListPlaylists(String token){
         this.token = token;
     }
 

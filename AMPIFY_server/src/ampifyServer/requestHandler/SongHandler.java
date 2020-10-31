@@ -38,7 +38,7 @@ public class SongHandler {
         // if the user if indeed verified
         ArrayList<Song> songs = new ArrayList<>();
         try {
-            String query = "SELECT song.*,count(lm.s_id) as likes  from song left join likes_membership lm on song.s_id = lm.s_id group by  lm.s_id;";
+            String query = "SELECT song.*,count(lm.s_id) as likes  from song left join likes_membership lm on song.s_id = lm.s_id group by  song.s_id;";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -68,7 +68,7 @@ public class SongHandler {
             return new ListSongsResponse(ResponseCode.SERVERDOWN, "We are facing some technical difficulties please be patient.", songs);
         }
     }
-    private static ArrayList<Artist> getArtists(String songId, Connection con){
+    public static ArrayList<Artist> getArtists(String songId, Connection con){
         String query = "select artist.* from artist join artist_membership on artist.a_id = artist_membership.a_id where s_id = ?;";
         try{
             PreparedStatement ps = con.prepareStatement(query);
@@ -76,15 +76,15 @@ public class SongHandler {
             ResultSet rs = ps.executeQuery();
             ArrayList<Artist> artists = new ArrayList<>();
             while (rs.next()){
-                artists.add(new Artist(
-                        rs.getString("name"),
-                        rs.getString("a_id"),
-                        rs.getString("active_form"),
-                        rs.getString("email")
-                        ));
+                Artist artist = new Artist(rs.getString("name"),rs.getString("a_id"),rs.getString("active_from"),rs.getString("email"));
+                artists.add(artist);
             }
+            artists.forEach(artist -> {
+                System.out.println(artist);
+            });
             return artists;
         } catch (SQLException e){
+            e.printStackTrace();
             return null;
         }
     }

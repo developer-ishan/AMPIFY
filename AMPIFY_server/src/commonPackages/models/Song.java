@@ -79,8 +79,12 @@ public class Song implements Serializable {
 
     @Override
     public String toString() {
+        StringBuffer artistsNames = new StringBuffer();
+        artists.forEach(artist -> {
+            artistsNames.append(artist.toString()+",");
+        });
         return "Song{" +
-                "artists=" + artists +
+                "artists=" + artistsNames.toString() +
                 ", year='" + year + '\'' +
                 ", genre='" + genre + '\'' +
                 ", name='" + name + '\'' +

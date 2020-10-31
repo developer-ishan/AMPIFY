@@ -4,6 +4,8 @@ import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.requests.group.*;
+import commonPackages.requests.playlist.CreatePlaylist;
+import commonPackages.requests.playlist.ListPlaylists;
 import commonPackages.requests.song.ListSongs;
 import commonPackages.requests.user.*;
 import commonPackages.responses.Response;
@@ -55,8 +57,13 @@ public class RequestHandler {
             return GroupRequestsHandler.makeAdmin((MakeAdmin) req,con);
         }
         else if(req instanceof ListSongs){
-            System.out.println("Got req");
             return SongHandler.listAll((ListSongs) req,con);
+        }
+        else if(req instanceof CreatePlaylist){
+            return PlaylistHandler.CreatePlaylist((CreatePlaylist) req,con);
+        }
+        else if(req instanceof ListPlaylists){
+            return PlaylistHandler.listPlaylists((ListPlaylists) req,con);
         }
         else{
             return null;

@@ -1,14 +1,6 @@
 package commonPackages.models;
 
-import commonPackages.requests.group.CreateGroup;
-import commonPackages.requests.group.InviteUser;
-import commonPackages.responses.Response;
-
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Group implements Serializable {
@@ -38,6 +30,22 @@ public class Group implements Serializable {
         if(this.id.equals(id))
             return true;
         return false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<User> getAdmins() {
+        return admins;
+    }
+
+    public ArrayList<User> getMembers() {
+        return members;
+    }
+
+    public ArrayList<Playlist> getPlaylists() {
+        return playlists;
     }
 
     @Override

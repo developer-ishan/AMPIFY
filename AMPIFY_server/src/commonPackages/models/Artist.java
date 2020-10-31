@@ -10,4 +10,11 @@ public class Artist extends User{
         this.activeFrom = activeFrom;
 
     }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

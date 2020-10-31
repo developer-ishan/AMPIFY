@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="TOP_RIGHT" prefHeight="61.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
@@ -40,36 +40,64 @@
    <right>
       <VBox prefHeight="575.0" prefWidth="205.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="254.0" text="GROUPS   " textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-               </VBox.margin>
-               <graphic>
-                  <Button fx:id="createGroupBtn" mnemonicParsing="false" style="-fx-background-color: #eee;" text="+">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-               </graphic>
-            </Label>
+            <Label alignment="CENTER" prefHeight="61.0" prefWidth="205.0" text="Trending Playlists" />
+            <VBox fx:id="publicPlaylists" prefHeight="200.0" prefWidth="100.0" />
          </children>
+         <padding>
+            <Insets top="75.0" />
+         </padding>
       </VBox>
    </right>
    <left>
-      <VBox prefHeight="411.0" prefWidth="142.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="800.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="142.0" text="My playlists" />
-            <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="145.0" text="MenuButton">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Create new" />
-              </items>
-            </MenuButton>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="142.0" text="Shared with me" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Play local" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="My Downloads" />
+            <TitledPane prefHeight="200.0" prefWidth="200.0" text="My Playlists">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="playlistList" prefHeight="165.0" prefWidth="232.0">
+                           <children>
+                              <HBox prefHeight="39.0" prefWidth="240.0">
+                                 <children>
+                                    <TextField fx:id="playlistName" prefHeight="39.0" prefWidth="215.0" promptText="New Playlist" />
+                                    <Button fx:id="createPlaylist" mnemonicParsing="false" onAction="#createPlaylistListener" prefHeight="39.0" prefWidth="149.0" text="Create" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane prefHeight="200.0" prefWidth="200.0" text="Shared With Me">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="sharedPlaylists" prefHeight="55.0" prefWidth="248.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane prefHeight="189.0" prefWidth="173.0" text="Groups">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="groupsList" prefHeight="165.0" prefWidth="232.0">
+                           <children>
+                              <HBox prefHeight="39.0" prefWidth="240.0">
+                                 <children>
+                                    <TextField fx:id="groupName" prefHeight="39.0" prefWidth="215.0" promptText="New Group" />
+                                    <Button fx:id="createGroup" mnemonicParsing="false" onAction="#createGroupListener" prefHeight="39.0" prefWidth="149.0" text="Create" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" text="Play local" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="248.0" text="My Downloads" />
          </children>
          <BorderPane.margin>
             <Insets top="85.0" />
@@ -111,9 +139,9 @@
             </HBox>
          </top>
          <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="221.0" prefWidth="702.0" BorderPane.alignment="CENTER">
                <content>
-                  <FlowPane fx:id="songsList" prefHeight="340.0" prefWidth="865.0" />
+                  <FlowPane fx:id="songsList" prefHeight="317.0" prefWidth="705.0" prefWrapLength="1500.0" />
                </content>
             </ScrollPane>
          </center>

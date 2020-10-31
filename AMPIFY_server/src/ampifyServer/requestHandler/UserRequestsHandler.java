@@ -258,7 +258,6 @@ public class UserRequestsHandler{
         }
         return new DeclineInviteResponse(FAILURE, "You are already a member, please leave if you want to.");
     }
-
     public static LeaveGroupResponse leaveGroup(LeaveGroup req, Connection con) throws SQLException{
         String userId;
         JWebToken token;
