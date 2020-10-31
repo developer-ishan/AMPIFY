@@ -4,6 +4,7 @@ import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
 import commonPackages.requests.auth.SignupRequest;
 import commonPackages.requests.group.*;
+import commonPackages.requests.playlist.AddSong;
 import commonPackages.requests.playlist.CreatePlaylist;
 import commonPackages.requests.playlist.ListPlaylists;
 import commonPackages.requests.song.ListSongs;
@@ -64,6 +65,9 @@ public class RequestHandler {
         }
         else if(req instanceof ListPlaylists){
             return PlaylistHandler.listPlaylists((ListPlaylists) req,con);
+        }
+        else if(req instanceof AddSong){
+            return PlaylistHandler.addSong((AddSong) req,con);
         }
         else{
             return null;

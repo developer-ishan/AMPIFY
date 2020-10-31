@@ -33,6 +33,9 @@ public class SongCard implements Initializable {
     private Button play;
     @FXML
     private Button download;
+    @FXML
+    private Button like;
+    boolean liked=false;
     private Song song;
 
     public Song getSong() {
@@ -64,6 +67,7 @@ public class SongCard implements Initializable {
             root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle(song.getName());
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent windowEvent) {
@@ -89,6 +93,18 @@ public class SongCard implements Initializable {
         download.setOnAction(event ->
         {
             download(event);
+        });
+        like.setOnAction(event -> {
+            if(liked==false){
+                liked=true;
+                like.setText("Liked");
+                like.setStyle("-fx-background-color: #fc4949;");
+            }
+            else{
+                liked=false;
+                like.setText("Like");
+                like.setStyle("-fx-background-color: #c7c3c3;");
+            }
         });
     }
 

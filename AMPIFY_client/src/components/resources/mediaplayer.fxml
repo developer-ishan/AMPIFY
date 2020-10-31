@@ -18,8 +18,22 @@
       </StackPane>
    </center>
    <bottom>
-      <VBox alignment="BOTTOM_CENTER" BorderPane.alignment="CENTER">
+      <VBox alignment="BOTTOM_CENTER" prefHeight="116.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="55.0" prefWidth="600.0">
+               <children>
+                  <Text fx:id="subtitle" fontSmoothingType="LCD" lineSpacing="1.0" strokeType="INSIDE" strokeWidth="0.0" text="subtitle" textAlignment="CENTER" wrappingWidth="414.9366622447965">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+            <Text fx:id="songtitle" fontSmoothingType="LCD" lineSpacing="1.0" strokeType="INSIDE" strokeWidth="0.0" text="songtitle" textAlignment="CENTER" wrappingWidth="351.9366622447965">
+               <font>
+                  <Font size="17.0" />
+               </font></Text>
+
             <VBox alignment="TOP_CENTER">
                <children>
                   <HBox alignment="CENTER">

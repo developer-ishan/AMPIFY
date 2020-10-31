@@ -1,4 +1,4 @@
-package AMPIFY_client.src.commonPackages;
+package commonPackages;
 
 public class DoublyLinkedList<File>{
     public class Node{

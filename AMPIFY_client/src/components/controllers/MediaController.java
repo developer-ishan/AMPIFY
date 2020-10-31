@@ -1,9 +1,9 @@
 package components.controllers;
 
-import AMPIFY_client.src.commonPackages.DoublyLinkedList;
+import commonPackages.DoublyLinkedList;
+import commonPackages.SubtitleDs;
 import commonPackages.models.Playlist;
 import commonPackages.models.Song;
-import javafx.application.Application;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -17,12 +17,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
-import javafx.stage.*;
 import javafx.util.Duration;
 
-import java.io.File;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -40,19 +38,25 @@ public class MediaController{
     @FXML
     private Text mediaplayed=new Text();
     @FXML
+    private Text songtitle=new Text();
+    @FXML
+    private Text subtitle=new Text();
+    @FXML
     private Button repeat;
     @FXML
     private Slider volumeSlider=new Slider();
     public MediaController() throws UnknownHostException, MalformedURLException {
     }
-    private DoublyLinkedList<Media> playlistLocal =new DoublyLinkedList<>();
-    DoublyLinkedList.Node head= playlistLocal.head;
+    private DoublyLinkedList<Song> linkedList =new DoublyLinkedList<>();
+    DoublyLinkedList.Node head= linkedList.head;
+
+    private SubtitleDs<String> Subtitles=new SubtitleDs<>();
 
     public MediaController(Song song) {
         try {
             URL url=new URL("http://localhost:8081/songs/"+song.getId()+".mp3");
             m=new Media(url.toString());
-            playlistLocal.add(m);
+            linkedList.add(song);
             player=new MediaPlayer(m);
             player.play();
         } catch (MalformedURLException e) {
@@ -65,14 +69,79 @@ public class MediaController{
     }
     public MediaController(Media media){
         this.m=media;
-        playlistLocal.add(m);
         player=new MediaPlayer(media);
         player.play();
+        player.setOnPlaying(new Runnable() {
+            @Override
+            public void run() {
+                songtitle.setText("");
+                subtitle.setText("");
+            }
+        });
         Requiredmethods();
     }
     private void Requiredmethods() {
-        if(playlistLocal.head.file!=null) {
-            System.out.println(playlistLocal.head.file.toString()+"\n");
+        if(linkedList.head.file!=null) {
+            System.out.println(linkedList.head.file.toString()+"\n");
+            URL SrtURL= null;
+            try {
+                SrtURL = new URL("http://localhost:8081/lyrics/"+linkedList.head.file.getId()+".srt");
+            BufferedReader reader;
+                reader = new BufferedReader(new InputStreamReader(SrtURL.openStream(), "UTF-8"));
+                while (true)
+                {
+                    String lineNum,time,subtitle,nullline;
+                    lineNum=reader.readLine();
+                    if(lineNum==null){
+                        System.out.println("Srt is finished");
+                        break;
+                    }
+                    time=reader.readLine();
+                    subtitle=reader.readLine();
+                    nullline=reader.readLine();
+                    while(true){
+                        if(nullline.equals("")){
+                            break;
+                        }
+                        else
+                        {
+                            subtitle=subtitle.concat("\n"+nullline);
+                        }
+                        nullline=reader.readLine();
+                    }
+                    String timestamp[]=time.split("-->");
+                    timestamp[0]=timestamp[0].split(",")[0];
+                    timestamp[1]=timestamp[1].split(",")[0];
+                    Subtitles.add(subtitle,timestamp[0],timestamp[1]);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }catch (UnsupportedEncodingException | FileNotFoundException e) {
+
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue,Duration newValue) {
+                    int sec=(int)newValue.toSeconds()%60;
+                    int min=(int)newValue.toMinutes();
+                    int hrs= (int) newValue.toHours();
+                    songtitle.setText(linkedList.head.file.getName());
+                    String timestamp;
+                    if(sec>2){
+                        sec=sec-2;
+                    }
+                    if(sec>=0&&sec<10){
+                       timestamp="0"+hrs+":0"+min+":0"+sec;
+                    }
+                    else{
+                        timestamp="0"+hrs+":0"+min+":"+sec;
+                    }
+                    subtitle.setText(Subtitles.search(timestamp));
+                }
+            });
         }
         player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
              @Override
@@ -105,7 +174,7 @@ public class MediaController{
         player.totalDurationProperty().addListener(new ChangeListener<Duration>() {
             @Override
             public void changed(ObservableValue<? extends Duration> observableValue, Duration duration, Duration totalDuration) {
-                int sec=(int)totalDuration.toSeconds()%60;
+                int sec=((int)totalDuration.toSeconds())%60;
                 int min=(int)totalDuration.toMinutes();
                 int hrs= (int) totalDuration.toHours();
                 mediaDuration.setText(hrs+":"+min+":"+sec);
@@ -135,7 +204,6 @@ public class MediaController{
     void play(ActionEvent event) throws MalformedURLException {
         Requiredmethods();
         player.play();
-        replay(event);
     }
     @FXML
     void pause(ActionEvent event){
@@ -154,17 +222,38 @@ public class MediaController{
     @FXML
     void replay(ActionEvent event)
     {
-        if(repeatTask==0) {
-            repeat.setText("Repeat");
-            player.setOnEndOfMedia(new Runnable() {
-                @Override
-                public void run() {
-                    next(event);
+        if(linkedList.head.file!=null){
+            if (repeatTask == 0) {
+                repeat.setText("Repeat");
+                player.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        next(event);
+                    }
+                });
+            } else if (repeatTask == 1) {
+                repeat.setText("Repeat Track");
+                player.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        player.seek(Duration.ZERO);
+                    }
+                });
+            } else {
+                repeat.setText("Don't Repeat");
+                if (head == linkedList.head.next) {
+                    player.setOnEndOfMedia(new Runnable() {
+                        @Override
+                        public void run() {
+                            player.seek(Duration.ZERO);
+                            player.stop();
+                        }
+                    });
                 }
-            });
+            }
+            repeatTask = (++repeatTask) % 3;
         }
-        else if(repeatTask==1){
-            repeat.setText("Repeat Track");
+        else{
             player.setOnEndOfMedia(new Runnable() {
                 @Override
                 public void run() {
@@ -172,29 +261,20 @@ public class MediaController{
                 }
             });
         }
-        else
-        {
-            repeat.setText("Don't Repeat");
-            if(head== playlistLocal.head.next)
-            {
-                player.setOnEndOfMedia(new Runnable() {
-                    @Override
-                    public void run() {
-                        player.seek(Duration.ZERO);
-                        player.stop();
-                    }
-                });
-            }
-        }
-        repeatTask=(++repeatTask)%3;
     }
     @FXML
     void next(ActionEvent event)
     {
         player.stop();
-        if(playlistLocal.head!=null){
-            playlistLocal.head = playlistLocal.head.next;
-            m = playlistLocal.head.file;
+        if(linkedList.head!=null&&linkedList.head.file!=null){
+            linkedList.head = linkedList.head.next;
+            URL url= null;
+            try {
+                url = new URL("http://localhost:8081/songs/"+linkedList.head.file.getId()+".mp3");
+                m=new Media(url.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
         player = new MediaPlayer(m);
         player.play();
@@ -204,11 +284,17 @@ public class MediaController{
     void previous(ActionEvent event)
     {
         player.stop();
-        if(playlistLocal.head!=null){
-            playlistLocal.head = playlistLocal.head.previous;
-            m = playlistLocal.head.file;
-            player = new MediaPlayer(m);
+        if(linkedList.head!=null){
+            linkedList.head = linkedList.head.previous;
+            URL url= null;
+            try {
+                url = new URL("http://localhost:8081/songs/"+linkedList.head.file.getId()+".mp3");
+                m=new Media(url.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
+        player = new MediaPlayer(m);
         player.play();
         Requiredmethods();
     }

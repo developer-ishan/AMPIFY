@@ -24,6 +24,7 @@ import components.controllers.cards.GroupCard;
 import components.controllers.cards.PlaylistCard;
 import components.controllers.cards.SongCard;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,6 +41,7 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import socket.Client;
 
 import java.io.*;
@@ -256,6 +258,25 @@ public class Home implements Initializable {
                 Stage stage = new Stage();
                 stage.setWidth(800);
                 stage.setHeight(600);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/mediaplayer.fxml"));
+                MediaController mediaController = new MediaController(media);
+                loader.setController(mediaController);
+                stage.setTitle(file.getName());
+                Parent root = null;
+                try {
+                    root = loader.load();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        @Override
+                        public void handle(WindowEvent windowEvent) {
+                            mediaController.player.stop();
+                        }
+                    });
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
