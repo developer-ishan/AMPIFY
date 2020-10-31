@@ -243,22 +243,23 @@ public class Home implements Initializable {
             }
         });
     }
-    public void opensongMenu(ActionEvent event){
-        FileChooser chooser=new FileChooser();
-        File file=chooser.showOpenDialog(null);
-            if(file.isFile())
-            {
-                System.out.println(file.getName().toLowerCase());
-                String[] str=file.getName().toLowerCase().split("\\.");
-                String ext=str[str.length-1];
-                System.out.println(ext);
-                if(ext.equals("mp3") || ext.equals("wav") || ext.equals("mp4")) {
-                    Media media=new Media(file.toURI().toString());
-                    Stage stage = new Stage();
-                    stage.setWidth(800);
-                    stage.setHeight(600);
-
-    public void setPlaylists(){
+    public void opensongMenu(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        File file = chooser.showOpenDialog(null);
+        if (file.isFile()) {
+            System.out.println(file.getName().toLowerCase());
+            String[] str = file.getName().toLowerCase().split("\\.");
+            String ext = str[str.length - 1];
+            System.out.println(ext);
+            if (ext.equals("mp3") || ext.equals("wav") || ext.equals("mp4")) {
+                Media media = new Media(file.toURI().toString());
+                Stage stage = new Stage();
+                stage.setWidth(800);
+                stage.setHeight(600);
+            }
+        }
+    }
+    public void setPlaylists () {
         System.out.println("Setting the user playlists.");
         Request req = new ListPlaylists(client.getToken());
         client.sendRequest(req);
@@ -274,9 +275,9 @@ public class Home implements Initializable {
                 Node node = loader.load();
                 int role = playlist.getRole();
                 int type = playlist.getType();
-                if (type == 2){
+                if (type == 2) {
                     publicPlaylists.getChildren().add(node);
-                } else if(role == 1)
+                } else if (role == 1)
                     playlistList.getChildren().add(node);
                 else if (role == 2)
                     sharedPlaylists.getChildren().add(node);
@@ -285,5 +286,4 @@ public class Home implements Initializable {
             }
         });
     }
-
 }
