@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="name" alignment="TOP_CENTER" text="Playlist Name" underline="true">
+               <font>
+                  <Font name="System Bold Italic" size="49.0" />
+               </font>
+            </Label>
+            <Button fx:id="play" mnemonicParsing="false" onAction="#playListener" text="Play">
+               <font>
+                  <Font name="System Bold Italic" size="19.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <FlowPane fx:id="songsList" prefHeight="290.0" prefWidth="596.0">
+               <children>
+                  <HBox prefHeight="59.0" prefWidth="585.0">
+                     <children>
+                        <MenuButton fx:id="songMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="59.0" prefWidth="425.0" text="Select Song">
+                           <font>
+                              <Font name="System Bold Italic" size="22.0" />
+                           </font>
+                        </MenuButton>
+                        <Button fx:id="addSong" mnemonicParsing="false" onAction="#addSongListener" prefHeight="59.0" prefWidth="159.0" text="Add">
+                           <font>
+                              <Font name="System Bold Italic" size="25.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children></FlowPane>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

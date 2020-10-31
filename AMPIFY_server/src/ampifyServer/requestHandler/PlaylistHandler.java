@@ -3,9 +3,11 @@ package ampifyServer.requestHandler;
 import commonPackages.models.Artist;
 import commonPackages.models.Playlist;
 import commonPackages.models.Song;
+import commonPackages.requests.playlist.AddSong;
 import commonPackages.requests.playlist.CreatePlaylist;
 import commonPackages.requests.playlist.ListPlaylists;
 import commonPackages.responses.ResponseCode;
+import commonPackages.responses.playlist.AddSongResponse;
 import commonPackages.responses.playlist.CreatePlaylistResponse;
 import commonPackages.responses.playlist.ListPlaylistsResponse;
 
@@ -17,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static commonPackages.responses.ResponseCode.FAILURE;
 import static commonPackages.responses.ResponseCode.SUCCESS;
 
 public class PlaylistHandler {
@@ -143,5 +146,43 @@ public class PlaylistHandler {
             playlists.add(playlist);
         }
         return new ListPlaylistsResponse(SUCCESS, "Here are your groups.", playlists);
+    }
+
+    public static AddSongResponse addSong(AddSong req, Connection con) throws SQLException{
+        // get the user credentials
+        // and verify the user
+        String userId;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token == null){
+                return new AddSongResponse(ResponseCode.DENIED, "Login first.");
+            }
+            if (token.isValid()) {
+                userId = token.getSubject();
+            } else {
+                return new AddSongResponse(ResponseCode.DENIED, "Login first.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new AddSongResponse(ResponseCode.DENIED, "Login first.");
+        }
+
+        // if the user if indeed verified
+        String p_id = req.getPlaylistId();
+        String s_id = req.getSongId();
+        String query = "INSERT into song_mem(p_id,s_id) values (?,?)";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1,p_id);
+        ps.setString(2,s_id);
+
+        try{
+            ps.executeUpdate();
+            Song song = SongHandler.getSongFromDB(req.getSongId(),con);
+            System.out.println(song+" is added.");
+            return new AddSongResponse(SUCCESS,"Song Added successfully.",song);
+        } catch (SQLException e){
+            return new AddSongResponse(FAILURE,"Song already exists in playlist.");
+        }
     }
 }
