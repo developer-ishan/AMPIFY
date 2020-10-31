@@ -35,14 +35,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import socket.Client;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -242,6 +243,20 @@ public class Home implements Initializable {
             }
         });
     }
+    public void opensongMenu(ActionEvent event){
+        FileChooser chooser=new FileChooser();
+        File file=chooser.showOpenDialog(null);
+            if(file.isFile())
+            {
+                System.out.println(file.getName().toLowerCase());
+                String[] str=file.getName().toLowerCase().split("\\.");
+                String ext=str[str.length-1];
+                System.out.println(ext);
+                if(ext.equals("mp3") || ext.equals("wav") || ext.equals("mp4")) {
+                    Media media=new Media(file.toURI().toString());
+                    Stage stage = new Stage();
+                    stage.setWidth(800);
+                    stage.setHeight(600);
 
     public void setPlaylists(){
         System.out.println("Setting the user playlists.");

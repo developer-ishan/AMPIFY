@@ -19,9 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -33,7 +31,7 @@ import java.net.UnknownHostException;
 public class MediaController{
 
     private Media m;
-    private MediaPlayer player;
+    public MediaPlayer player;
     private int repeatTask=0;
     @FXML
     private Slider progressBar=new Slider();
@@ -54,6 +52,7 @@ public class MediaController{
         try {
             URL url=new URL("http://localhost:8081/songs/"+song.getId()+".mp3");
             m=new Media(url.toString());
+            playlistLocal.add(m);
             player=new MediaPlayer(m);
             player.play();
         } catch (MalformedURLException e) {
@@ -64,47 +63,12 @@ public class MediaController{
     public MediaController(Playlist playlist){
 
     }
-    @FXML
-    void openSongFolder(ActionEvent event) throws MalformedURLException {
-        DirectoryChooser chooser=new DirectoryChooser();
-        File dir=chooser.showDialog(null);
-        for (File file: dir.listFiles()){
-            if(file.isFile())
-            {
-                System.out.println(file.getName().toLowerCase());
-                String[] str=file.getName().toLowerCase().split("\\.");
-                String ext=str[str.length-1];
-                System.out.println(ext);
-                if(ext.equals("mp3") || ext.equals("wav") || ext.equals("mp4")) {
-                    Media media=new Media(file.toURI().toString());
-                    playlistLocal.add(media);
-                    media=null;
-                }
-            }
-        }
-        m=playlistLocal.head.file;
-    }
-    @FXML
-    void openSongMenu(ActionEvent event) throws MalformedURLException {
-//        URL url=new URL("http://localhost:8888/D:/audios/punjabi/Jinne_Saah.mp3");
-//        Media media=new Media(url.toString());
-//        playlistLocal.add(media);
-//        URL url1=new URL("http://localhost:8888/D:/audios/punjabi/Teriyan_Deedan_-Dil_Diyan_Gallan-(MP3Tau.Com)_-320KBPS.mp3");
-//        media=new Media(url1.toString());
-//        playlistLocal.add(media);
-//        m=playlistLocal.head.file;
-        try {
-            FileChooser chooser=new FileChooser();
-            File file = chooser.showOpenDialog(null);
-                if (file != null) {
-                    m = new Media(file.toURI().toString());
-                    Requiredmethods();
-                    } else {
-                        System.out.println("file is null");
-                    }
-           } catch (Exception e) {
-            System.err.println(e);
-        }
+    public MediaController(Media media){
+        this.m=media;
+        playlistLocal.add(m);
+        player=new MediaPlayer(media);
+        player.play();
+        Requiredmethods();
     }
     private void Requiredmethods() {
         if(playlistLocal.head.file!=null) {
@@ -228,9 +192,11 @@ public class MediaController{
     void next(ActionEvent event)
     {
         player.stop();
-        playlistLocal.head= playlistLocal.head.next;
-        m=playlistLocal.head.file;
-        player=new MediaPlayer(m);
+        if(playlistLocal.head!=null){
+            playlistLocal.head = playlistLocal.head.next;
+            m = playlistLocal.head.file;
+        }
+        player = new MediaPlayer(m);
         player.play();
         Requiredmethods();
     }
@@ -238,10 +204,13 @@ public class MediaController{
     void previous(ActionEvent event)
     {
         player.stop();
-        playlistLocal.head= playlistLocal.head.previous;
-        m=playlistLocal.head.file;
-        player=new MediaPlayer(m);
+        if(playlistLocal.head!=null){
+            playlistLocal.head = playlistLocal.head.previous;
+            m = playlistLocal.head.file;
+            player = new MediaPlayer(m);
+        }
         player.play();
         Requiredmethods();
     }
+
 }
