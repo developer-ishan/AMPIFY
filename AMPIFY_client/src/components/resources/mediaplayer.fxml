@@ -6,10 +6,7 @@
 <?import javafx.scene.media.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <StackPane opacity="0.41" BorderPane.alignment="CENTER">
          <children>
@@ -20,38 +17,6 @@
          </children>
       </StackPane>
    </center>
-   <top>
-      <MenuBar prefHeight="24.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#openSongMenu" text="Open File" />
-                  <MenuItem mnemonicParsing="false" onAction="#openSongFolder" text="Open Folder" />
-                  <MenuItem mnemonicParsing="false" text="Open Recent" />
-              <MenuItem mnemonicParsing="false" text="Downloads" />
-                  <MenuItem mnemonicParsing="false" text="Exit Player" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Tools">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Manage Queue" />
-                <MenuItem mnemonicParsing="false" text="Play" />
-                <MenuItem mnemonicParsing="false" text="Pause" />
-                  <MenuItem mnemonicParsing="false" text="Next" />
-                  <MenuItem mnemonicParsing="false" text="Previous" />
-                  <MenuItem mnemonicParsing="false" text="Repeat" />
-                  <MenuItem mnemonicParsing="false" text="Shuffle" />
-               </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Logout" />
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
    <bottom>
       <VBox alignment="BOTTOM_CENTER" BorderPane.alignment="CENTER">
          <children>

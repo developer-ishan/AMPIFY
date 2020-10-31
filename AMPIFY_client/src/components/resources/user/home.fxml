@@ -68,7 +68,7 @@
               </items>
             </MenuButton>
             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="142.0" text="Shared with me" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Play local" />
+            <Button mnemonicParsing="false" onAction="#opensongMenu" prefHeight="25.0" prefWidth="143.0" text="Play local" />
             <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="147.0" text="My Downloads" />
          </children>
          <BorderPane.margin>

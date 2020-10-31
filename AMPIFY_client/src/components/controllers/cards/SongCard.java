@@ -1,8 +1,10 @@
 package components.controllers.cards;
 
+import commonPackages.DownloadFile;
 import commonPackages.models.Song;
 import components.controllers.MediaController;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +16,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,15 +25,14 @@ import java.util.ResourceBundle;
 public class SongCard implements Initializable {
     @FXML
     private ImageView imageView;
-
     @FXML
     private Label name;
-
     @FXML
     private Label duration;
     @FXML
     private Button play;
-
+    @FXML
+    private Button download;
     private Song song;
 
     public Song getSong() {
@@ -40,8 +43,15 @@ public class SongCard implements Initializable {
         this.song = song;
     }
 
-
+    public void download(ActionEvent event){
+        try {
+            DownloadFile.download(song);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void play(ActionEvent event) {
+
         Stage stage = new Stage();
         stage.setWidth(800);
         stage.setHeight(600);
@@ -54,7 +64,14 @@ public class SongCard implements Initializable {
             root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    mediaController.player.stop();
+                }
+            });
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,16 +86,10 @@ public class SongCard implements Initializable {
         play.setOnAction(event -> {
             play(event);
         });
-//                   try {
-//                       URL url1 = new URL("http://localhost:8081/songs/" + song.getId() + ".mp3");
-//                       Media m = new Media(url1.toString());
-//                       MediaPlayer player = new MediaPlayer(m);
-//                       player.play();
-//                   } catch (MalformedURLException e) {
-//                       e.printStackTrace();
-//                   }
-//                   System.out.println("play" + song.getName() + ".mp3 is clicked");
-
+        download.setOnAction(event ->
+        {
+            download(event);
+        });
     }
 
 }
