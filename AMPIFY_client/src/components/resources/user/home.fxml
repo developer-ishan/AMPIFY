@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="TOP_RIGHT" prefHeight="61.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
@@ -60,7 +60,7 @@
    <left>
       <VBox prefHeight="298.0" prefWidth="250.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <TitledPane prefHeight="74.0" prefWidth="250.0" text="My Playlists">
+            <TitledPane prefHeight="200.0" prefWidth="250.0" text="My Playlists">
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>

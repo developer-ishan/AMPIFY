@@ -12,12 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import socket.Client;
 import java.io.DataOutputStream;
@@ -132,8 +134,13 @@ public class Login {
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
 
-                stage.setWidth(1920);
-                stage.setHeight(1080);
+                int width = 1920;
+                int height = 1080;
+                stage.setWidth(width);
+                stage.setHeight(height);
+                Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                stage.setX((screenBounds.getWidth() - width) / 2);
+                stage.setY((screenBounds.getHeight() - height) / 2);
                 stage.setScene(scene);
             }
         } catch (IOException e) {

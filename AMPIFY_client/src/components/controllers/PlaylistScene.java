@@ -16,8 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import socket.Client;
 
 import java.io.IOException;
@@ -55,6 +59,30 @@ public class PlaylistScene implements Initializable {
     @FXML
     void playListener(ActionEvent event) {
         System.out.println("Playing the playlist.");
+        Stage stage = new Stage();
+        stage.setWidth(800);
+        stage.setHeight(600);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mediaplayer.fxml"));
+        MediaController mediaController = new MediaController(playlist);
+        loader.setController(mediaController);
+        Parent root = null;
+        try {
+            root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle(playlist.getName());
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    mediaController.player.stop();
+                }
+            });
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

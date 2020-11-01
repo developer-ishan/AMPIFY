@@ -117,7 +117,7 @@ public class MediaController{
                     subtitle=reader.readLine();
                     nullline=reader.readLine();
                     while(true){
-                        if(nullline.equals("")){
+                        if(nullline == null || nullline.equals("")){
                             break;
                         }
                         else

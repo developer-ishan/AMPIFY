@@ -7,6 +7,6 @@
    <children>
       <Label fx:id="name" alignment="CENTER" prefHeight="42.0" prefWidth="128.0" text="Name" />
       <Button fx:id="playBtn" mnemonicParsing="false" onAction="#playListener" prefHeight="43.0" prefWidth="59.0" text="Play" />
-      <Button fx:id="openPlaylist" mnemonicParsing="false" onAction="#openPlaylistListener" prefHeight="46.0" prefWidth="52.0" text="Edit" />
+      <Button fx:id="openPlaylist" mnemonicParsing="false" onAction="#openPlaylistListener" prefHeight="46.0" prefWidth="52.0" text="Open" />
    </children>
 </HBox>
