@@ -284,7 +284,6 @@ public class UserRequestsHandler{
                 return new LikeResponse(ResponseCode.DENIED,"Login first.");
             }
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
             return new LikeResponse(ResponseCode.DENIED,"Login first.");
         }
 

@@ -53,12 +53,11 @@ public class SongCard implements Initializable {
             errAlert.setHeaderText(res.getCode().toString());
             errAlert.setContentText(res.getMessage());
             errAlert.show();
-            likes.setText(String.valueOf(song.getLikes()+1));
         } else{
             confirmAlert.setHeaderText("Successfully liked");
             confirmAlert.setContentText(res.getMessage());
             confirmAlert.show();
-
+            likes.setText(String.valueOf(song.getLikes()+1));
         }
     }
     private Song song;
