@@ -24,6 +24,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 
 
 public class MediaController{
@@ -65,7 +68,21 @@ public class MediaController{
         Requiredmethods();
     }
     public MediaController(Playlist playlist){
-
+    List<Song> list=playlist.getSongs();
+        ListIterator<Song> iterator= list.listIterator();
+        while(iterator.hasNext()){
+            linkedList.add(iterator.next());
+        }
+        URL url= null;
+        try {
+            url = new URL("http://localhost:8081/songs/"+linkedList.head.file.getId()+".mp3");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        m=new Media(url.toString());
+        player=new MediaPlayer(m);
+        player.play();
+        Requiredmethods();
     }
     public MediaController(Media media){
         this.m=media;
@@ -298,5 +315,25 @@ public class MediaController{
         player.play();
         Requiredmethods();
     }
-
+    @FXML
+    void shuffle() {
+        if(linkedList.head.file!=null){
+            player.stop();
+            Random rand = new Random();
+            int n = rand.nextInt() % 5 + 1;
+            while (n-- != 0) {
+                linkedList.head = linkedList.head.next;
+            }
+            URL url = null;
+            try {
+                url = new URL("http://localhost:8081/songs/" + linkedList.head.file.getId() + ".mp3");
+                m = new Media(url.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            player = new MediaPlayer(m);
+            player.play();
+            Requiredmethods();
+        }
+    }
 }
