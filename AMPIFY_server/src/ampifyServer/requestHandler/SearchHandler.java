@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class SearchHandler {
 
     public static ListSongsResponse listSearch(ListSearch req, Connection con) {
-
+        System.out.println(req);
         String userId;
         JWebToken token;
         try {
@@ -65,18 +65,22 @@ public class SearchHandler {
                 song.setLyrics(lyrics);
                 song.setName(name);
                 song.setYear(year);
-
+                song.setArtists(SongHandler.getArtists(songId,con));
                 SearchedSongs.add(song);
             }
 
             return new ListSongsResponse(ResponseCode.SUCCESS, "list of songs search by name", SearchedSongs);
         } catch (SQLException e) {
+            e.printStackTrace();
             return new ListSongsResponse(ResponseCode.SERVERDOWN, "server might be slow", SearchedSongs);
         }
     }
 
     private static String Search_By_Name(String searchString) {
-        return "SELECT * FROM 'song' where title REGEXP '^" + searchString + "'";
+        return "SELECT song.*,count(lm.s_id) as likes  " +
+                "from song left join likes_membership lm on song.s_id = lm.s_id " +
+                "where title REGEXP '^" + searchString + "'"+
+                "group by  song.s_id ;";
     }
 
     private static String Search_By_Artist(String searchString) {
@@ -84,6 +88,9 @@ public class SearchHandler {
     }
 
     private static String Search_By_Genre(String searchString) {
-        return "SELECT * FROM 'song' where genre REGEXP '^" + searchString + "'";
+        return "SELECT song.*,count(lm.s_id) as likes  " +
+                "from song left join likes_membership lm on song.s_id = lm.s_id " +
+                "where genre REGEXP '^" + searchString + "'"+
+                "group by  song.s_id ;";
     }
 }

@@ -90,7 +90,6 @@ public class UserRequestsHandler{
             jwtPayload.put("exp", ldt.toEpochSecond(ZoneOffset.UTC)); //this needs to be configured
             String token = new JWebToken(jwtPayload).toString();
 
-
             return new LoginResponse(SUCCESS,"Welcome",token, user);
         }
         return new LoginResponse(DENIED,"Invalid Credentials");
@@ -163,20 +162,7 @@ public class UserRequestsHandler{
 
         return new ListGroupsResponse(SUCCESS,"Here are your groups.",groups);
     }
-    public static ListInvitesResponse getInvites(ListInvites req, Connection con) throws SQLException{
-        String userId;
-        JWebToken token;
-        try {
-            token = new JWebToken(req.getToken());
-            if(token.isValid()){
-                userId = token.getSubject();
-            } else {
-                return new ListInvitesResponse(ResponseCode.DENIED,"Login first.",null);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return new ListInvitesResponse(ResponseCode.DENIED,"Login first.",null);
-        }
+    public static ListInvitesResponse getInvites(String userId, Connection con) throws SQLException{
         ArrayList<Group> invites = new ArrayList<Group>();
         String query = "SELECT groups.* " +
                 "FROM groups " +
@@ -188,7 +174,8 @@ public class UserRequestsHandler{
         ResultSet rs = preStat.executeQuery();
 
         while(rs.next()){
-            invites.add(new Group(rs.getString("g_id"),rs.getString("name")));
+            Group invite = new Group(rs.getString("g_id"),rs.getString("name"));
+            invites.add(invite);
         }
         return new ListInvitesResponse(SUCCESS,"Here are your invites.",invites);
     }

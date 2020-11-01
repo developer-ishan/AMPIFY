@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1174.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="TOP_RIGHT" prefHeight="61.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
@@ -53,6 +53,15 @@
          <children>
             <Label alignment="CENTER" prefHeight="61.0" prefWidth="205.0" text="Trending Playlists" />
             <VBox fx:id="publicPlaylists" prefHeight="200.0" prefWidth="100.0" />
+            <TitledPane prefHeight="200.0" prefWidth="250.0" text="Invites">
+               <content>
+                  <ScrollPane prefHeight="171.0" prefWidth="152.0">
+                     <content>
+                        <VBox fx:id="invitesList" prefHeight="161.0" prefWidth="199.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
          </children>
          <padding>
             <Insets top="75.0" />
@@ -114,16 +123,13 @@
             <Insets top="85.0" />
          </BorderPane.margin></VBox>
    </left>
-   <bottom>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
-   </bottom>
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="869.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField prefHeight="49.0" prefWidth="218.0" promptText="Search" />
-                  <Button mnemonicParsing="false" prefHeight="49.0" prefWidth="113.0" text="GO" />
+                  <TextField fx:id="query" prefHeight="49.0" prefWidth="218.0" promptText="Search" />
+                  <Button mnemonicParsing="false" onAction="#searchListener" prefHeight="49.0" prefWidth="113.0" text="GO" />
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="66.0" prefWidth="436.0">
                      <children>
                         <Label contentDisplay="CENTER" prefHeight="22.0" prefWidth="109.0" text="Filters" textAlignment="CENTER">
@@ -132,13 +138,12 @@
                            </font></Label>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <ToggleButton mnemonicParsing="false" text="ToggleButton">
+                              <ToggleButton fx:id="filterByName" mnemonicParsing="false" text="By Name">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="filter" />
                                  </toggleGroup>
                               </ToggleButton>
-                              <ToggleButton mnemonicParsing="false" text="ToggleButton" toggleGroup="$filter" />
-                              <ToggleButton mnemonicParsing="false" text="ToggleButton" toggleGroup="$filter" />
+                              <ToggleButton fx:id="filterByGenre" mnemonicParsing="false" text="By Genre" toggleGroup="$filter" />
                            </children>
                         </HBox>
                      </children>
