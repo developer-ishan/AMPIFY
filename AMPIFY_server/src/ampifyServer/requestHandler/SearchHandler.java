@@ -35,7 +35,7 @@ public class SearchHandler {
         }
 
         ArrayList<Song> SearchedSongs = new ArrayList<>();
-        String searchQuery = req.getSearchQuery();
+        String searchQuery = req.getSearchQuery().substring(0, 2);
         String searchString = "";
 
         if (req.getSearchCode().equals(SearchFilterCode.BY_SONG_NAME))
