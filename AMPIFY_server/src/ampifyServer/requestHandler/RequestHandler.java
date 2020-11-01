@@ -68,6 +68,9 @@ public class RequestHandler {
         else if(req instanceof ListSearch){
             return SearchHandler.listSearch((ListSearch) req,con);
         }
+        else if(req instanceof Like){
+            return UserRequestsHandler.like((Like) req,con);
+        }
         else{
             return null;
         }
