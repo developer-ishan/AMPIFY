@@ -68,6 +68,12 @@ public class PlaylistCard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         name.setText(playlist.getName());
+//        playBtn.setOnAction(event -> {
+//            playListener(event);
+//        });
+//        openPlaylist.setOnAction(event -> {
+//            openPlaylistListener(event);
+//        });
     }
 
     public Playlist getPlaylist() {

@@ -1,7 +1,5 @@
 package components.controllers.auth;
 
-import commonPackages.requests.auth.SignupRequest;
-import commonPackages.requests.user.UserDetails;
 import commonPackages.responses.ResponseCode;
 import commonPackages.requests.Request;
 import commonPackages.requests.auth.LoginRequest;
@@ -22,16 +20,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import socket.Client;
-
-import javax.print.attribute.standard.RequestingUserName;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.ResourceBundle;
 
 public class Login {
     @FXML
