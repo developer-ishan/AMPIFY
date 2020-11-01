@@ -258,7 +258,7 @@ public class Home implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/cards/songCard.fxml"));
                 SongCard songCard = new SongCard();
-                songCard.setSong(song);
+                songCard.setSong(song,client);
                 loader.setController(songCard);
                 Node node = loader.load();
                 songsList.getChildren().add(node);

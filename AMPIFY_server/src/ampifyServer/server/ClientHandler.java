@@ -45,7 +45,7 @@ public class ClientHandler implements Runnable{
             try {
                 // get the request
                 Request req = (Request) this.getRequest();
-
+                System.out.println(req);
                 // if the request is of notifications
                 // then this thread needs to be notification thread
                 if(req instanceof GetNotifications){

@@ -1,7 +1,6 @@
 package commonPackages.requests.song;
 
 import commonPackages.requests.Request;
-import commonPackages.requests.song.SearchFilterCode;
 
 public class ListSearch extends Request {
     private String token;

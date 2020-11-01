@@ -4,24 +4,30 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="377.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
          <children>
             <HBox alignment="CENTER" prefHeight="332.0" prefWidth="500.0">
                <children>
-                  <ImageView fx:id="imageView" fitHeight="308.0" fitWidth="328.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageView" fitHeight="310.0" fitWidth="372.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="500.0" spacing="25.0">
+            <HBox alignment="CENTER" prefHeight="64.0" prefWidth="332.0" spacing="25.0">
                <children>
-                  <Label fx:id="name" alignment="CENTER" prefHeight="17.0" prefWidth="160.0" text="Name" />
-                  <Button fx:id="play" mnemonicParsing="false" prefHeight="63.0" prefWidth="102.0" text="Play" />
-                  <Label fx:id="duration" alignment="CENTER" prefHeight="17.0" prefWidth="156.0" text="Duration" />
-                  <Button fx:id="download" mnemonicParsing="false" prefHeight="63.0" prefWidth="102.0" text="Download" />
+                  <Label fx:id="name" alignment="CENTER" prefHeight="47.0" prefWidth="99.0" text="Name" />
+                  <Button fx:id="play" mnemonicParsing="false" prefHeight="47.0" prefWidth="67.0" text="Play" />
+                  <Label fx:id="duration" alignment="CENTER" prefHeight="17.0" prefWidth="57.0" text="Duration" />
+                  <Button fx:id="download" mnemonicParsing="false" prefHeight="47.0" prefWidth="80.0" text="Download" />
                </children>
             </HBox>
          </children>
       </VBox>
+      <HBox layoutX="1.0" layoutY="364.0" prefHeight="55.0" prefWidth="378.0">
+         <children>
+            <Label fx:id="likes" prefHeight="54.0" prefWidth="116.0" text="Likes" />
+            <Button fx:id="likeBtn" mnemonicParsing="false" onAction="#likeBtnListener" prefHeight="55.0" prefWidth="82.0" text="Like" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

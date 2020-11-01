@@ -273,6 +273,34 @@ public class UserRequestsHandler{
             return new LeaveGroupResponse(FAILURE,"Cannot Leave Group.");
         }
     }
+    public static LikeResponse like(Like req, Connection con) throws SQLException{
+        String userId;
+        JWebToken token;
+        try {
+            token = new JWebToken(req.getToken());
+            if(token.isValid()){
+                userId = token.getSubject();
+            } else {
+                return new LikeResponse(ResponseCode.DENIED,"Login first.");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new LikeResponse(ResponseCode.DENIED,"Login first.");
+        }
+
+        String q = "INSERT into likes_membership(s_id,u_id) values(?,?)";
+        PreparedStatement ps = con.prepareStatement(q);
+        ps.setString(1, req.getSongId());
+        ps.setString(2,userId);
+
+        try {
+            ps.executeUpdate();
+            return new LikeResponse(SUCCESS,"Song liked.");
+        } catch (SQLException e){
+            e.printStackTrace();
+            return new LikeResponse(FAILURE,"Already liked");
+        }
+    }
 
     public static boolean isAval(Connection con, String u_id) throws SQLException{
         String query = "SELECT isAval from user where u_id=?";
